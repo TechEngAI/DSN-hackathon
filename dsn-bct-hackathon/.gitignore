@@ -9,3 +9,4 @@ data/yelp_academic_dataset_business.json
 data/yelp_academic_dataset_review.json
 data/amazon_metadata.jsonl
 data/amazon_reviews.jsonl
+chroma
