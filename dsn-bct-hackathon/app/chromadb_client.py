@@ -15,29 +15,55 @@ class VectorStore:
         self.collection: Any | None = None
         self.connection_error: str | None = None
 
+        self._connect()
+
+    def _connect(self) -> None:
+        use_local = os.getenv("USE_LOCAL_CHROMA", "false").strip().lower() == "true"
+
         try:
-            use_local = os.getenv("USE_LOCAL_CHROMA", "false").strip().lower() == "true"
             if use_local:
                 self.client = chromadb.Client()
-            else:
-                self.client = chromadb.HttpClient(host="chromadb", port=8000)
+                self.collection = self.client.get_or_create_collection(name=self.collection_name)
+                self.connection_error = None
+                return
 
-            self.collection = self.client.get_or_create_collection(name=self.collection_name)
+            host = os.getenv("CHROMA_HOST", "chromadb").strip() or "chromadb"
+            port = int(os.getenv("CHROMA_PORT", "8000"))
+            self._connect_http(host=host, port=port)
         except Exception as exc:
+            if not use_local and os.getenv("CHROMA_HOST") is None:
+                try:
+                    self._connect_http(host="localhost", port=8000)
+                    print("Connected to ChromaDB at localhost:8000")
+                    return
+                except Exception as fallback_exc:
+                    self.connection_error = f"ChromaDB connection error: {fallback_exc}"
+                    return
+
             self.connection_error = f"ChromaDB connection error: {exc}"
+
+    def _connect_http(self, host: str, port: int) -> None:
+        self.client = chromadb.HttpClient(host=host, port=port)
+        self.collection = self.client.get_or_create_collection(name=self.collection_name)
+        self.connection_error = None
+        print(f"Connected to ChromaDB at {host}:{port}")
 
     def add_items(self, items: list[dict]) -> dict:
         if self.connection_error or self.collection is None:
             return {"success": False, "error": self.connection_error or "ChromaDB collection unavailable."}
 
-        valid_items = [item for item in items if item.get("id") and item.get("text")]
+        valid_items = [
+            item
+            for item in items
+            if item.get("id") and (item.get("document") or item.get("text"))
+        ]
         if not valid_items:
-            return {"success": False, "error": "No valid items provided. Each item needs id and text."}
+            return {"success": False, "error": "No valid items provided. Each item needs id and document."}
 
         try:
             self.collection.upsert(
                 ids=[str(item["id"]) for item in valid_items],
-                documents=[str(item["text"]) for item in valid_items],
+                documents=[str(item.get("document") or item.get("text")) for item in valid_items],
                 metadatas=[item.get("metadata", {}) for item in valid_items],
             )
             return {"success": True, "indexed": len(valid_items)}
@@ -69,6 +95,7 @@ class VectorStore:
                 matches.append(
                     {
                         "id": item_id,
+                        "document": documents[index] if index < len(documents) else "",
                         "text": documents[index] if index < len(documents) else "",
                         "metadata": metadatas[index] if index < len(metadatas) and metadatas[index] else {},
                         "score": round(score, 4),
@@ -77,7 +104,15 @@ class VectorStore:
 
             return matches
         except Exception as exc:
-            return [{"id": "search-error", "text": "", "metadata": {"error": f"ChromaDB search error: {exc}"}, "score": 0.0}]
+            return [
+                {
+                    "id": "search-error",
+                    "document": "",
+                    "text": "",
+                    "metadata": {"error": f"ChromaDB search error: {exc}"},
+                    "score": 0.0,
+                }
+            ]
 
     def get_collection_count(self) -> int:
         if self.connection_error or self.collection is None:

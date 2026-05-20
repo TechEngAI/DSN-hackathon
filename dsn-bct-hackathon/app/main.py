@@ -1,11 +1,20 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.startup import startup_event
 from app.task_a import router as task_a_router
 from app.task_b import router as task_b_router
 
 
-app = FastAPI(title="DSN x BCT Recommendation API")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await startup_event()
+    yield
+
+
+app = FastAPI(title="DSN x BCT Recommendation API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

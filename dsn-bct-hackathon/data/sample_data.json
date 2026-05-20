@@ -1,12 +1,75 @@
-[
-  {
-    "id": 1,
-    "title": "Sample entry 1",
-    "content": "This is a sample data item for judges to test with."
-  },
-  {
-    "id": 2,
-    "title": "Sample entry 2",
-    "content": "Another sample data item."
-  }
-]
+{
+  "businesses": [
+    {
+      "business_id": "ng-suya-001",
+      "name": "Yaba Night Suya Spot",
+      "city": "Lagos",
+      "state": "LA",
+      "stars": 4.6,
+      "review_count": 128,
+      "categories": "Suya, Grills, Nigerian, Street Food",
+      "is_open": 1,
+      "attributes": {
+        "OutdoorSeating": "True",
+        "RestaurantsPriceRange2": "1",
+        "GoodForLateNight": "True"
+      }
+    },
+    {
+      "business_id": "ng-jollof-002",
+      "name": "Mama Eko Jollof Kitchen",
+      "city": "Ikeja",
+      "state": "LA",
+      "stars": 4.8,
+      "review_count": 214,
+      "categories": "Jollof Rice, Nigerian, Fast Food, Lunch",
+      "is_open": 1,
+      "attributes": {
+        "RestaurantsDelivery": "True",
+        "RestaurantsTakeOut": "True",
+        "GoodForLunch": "True"
+      }
+    },
+    {
+      "business_id": "ng-peppersoup-003",
+      "name": "Abuja Pepper Soup House",
+      "city": "Abuja",
+      "state": "FC",
+      "stars": 4.4,
+      "review_count": 89,
+      "categories": "Pepper Soup, Nigerian, Seafood, Casual Dining",
+      "is_open": 1,
+      "attributes": {
+        "RestaurantsTableService": "True",
+        "GoodForDinner": "True",
+        "Alcohol": "beer_and_wine"
+      }
+    }
+  ],
+  "reviews": [
+    {
+      "review_id": "rev-001",
+      "user_id": "user-lagos-foodie",
+      "business_id": "ng-suya-001",
+      "stars": 5.0,
+      "text": "The suya was hot, spicy, and fresh. Perfect stop after work around Yaba.",
+      "date": "2025-07-18 20:14:00"
+    },
+    {
+      "review_id": "rev-002",
+      "user_id": "user-office-lunch",
+      "business_id": "ng-jollof-002",
+      "stars": 5.0,
+      "text": "Smoky party-style jollof with soft chicken and quick delivery to the office.",
+      "date": "2025-08-03 13:05:00"
+    },
+    {
+      "review_id": "rev-003",
+      "user_id": "user-abuja-nights",
+      "business_id": "ng-peppersoup-003",
+      "stars": 4.0,
+      "text": "Good catfish pepper soup with enough spice. Nice place for a calm evening meal.",
+      "date": "2025-09-22 19:42:00"
+    }
+  ]
+}
