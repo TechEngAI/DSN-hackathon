@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+.DS_Store
+data/yelp_academic_dataset_business.json
+data/yelp_academic_dataset_review.json
