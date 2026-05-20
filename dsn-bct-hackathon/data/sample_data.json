@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "title": "Sample entry 1",
+    "content": "This is a sample data item for judges to test with."
+  },
+  {
+    "id": 2,
+    "title": "Sample entry 2",
+    "content": "Another sample data item."
+  }
+]
