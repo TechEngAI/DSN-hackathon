@@ -1,0 +1,18 @@
+{
+  "rating_bias_baseline_stars": 3.85,
+  "target_average_review_length_words": 100,
+  "style_anchors": {
+    "Emotional Intensity": {
+      "description": "Exhibits high emotional expression via ALL-CAPS words, multiple exclamation marks, or direct blunt terminology.",
+      "trait_mapping": "Zero Chills / Direct"
+    },
+    "Staff & Respect Focus": {
+      "description": "Mentions greetings, server attentiveness, or manager attitude, indicating focus on interpersonal respect.",
+      "trait_mapping": "Strict Protocol / Elder Respect"
+    },
+    "Price/Portion Inspection": {
+      "description": "Breaks down billing, costs, pricing tiers, discounts, or quantity value.",
+      "trait_mapping": "Value-for-Money Hawk"
+    }
+  }
+}
