@@ -9,6 +9,8 @@ import re
 sys.path.append(os.path.abspath("dsn-bct-hackathon"))
 os.environ["USE_LOCAL_CHROMA"] = "true"
 
+import asyncio
+from app.startup import startup_event
 from app.chromadb_client import VectorStore
 from app.task_a import generate_review, GenerateReviewRequest
 from chromadb.utils import embedding_functions
@@ -67,6 +69,9 @@ def evaluate():
     print("="*60)
     print("   RUNNING DSN X BCT HACKATHON METRICS & EVALUATION (DAY 5)")
     print("="*60)
+
+    # Initialize app_state
+    asyncio.run(startup_event())
 
     # 2.1 Load Validation Personas
     personas_path = "analytics/validation_10_personas.json"

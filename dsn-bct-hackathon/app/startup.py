@@ -49,4 +49,4 @@ async def startup_event() -> None:
     except Exception as exc:
         print(f"Startup error: {exc}")
     finally:
-        print(f"✅ Startup complete — {business_count} businesses loaded, {review_count} reviews loaded")
+        print(f"[SUCCESS] Startup complete — {business_count} businesses loaded, {review_count} reviews loaded")

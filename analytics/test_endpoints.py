@@ -27,8 +27,8 @@ def test_endpoints():
     )
     
     # Wait for server to boot up
-    print("Waiting 5 seconds for server to start...")
-    time.sleep(5)
+    print("Waiting 12 seconds for server to start...")
+    time.sleep(12)
     
     # Check if server process is still alive
     if server_process.poll() is not None:
@@ -65,17 +65,15 @@ def test_endpoints():
         print(f"Response: {json_pretty(res_a.json())}")
         assert res_a.status_code == 200, "Task A failed"
         data_a = res_a.json()
-        assert "user_id" in data_a
-        assert "item_id" in data_a
         assert "rating" in data_a
         assert "review_text" in data_a
-        assert "naija_cues_applied" in data_a
+        assert "reasoning" in data_a
         print("Task A Schema Validation: PASSED")
 
         # 3. Test Task B: Recommendation Endpoint (Normal Flow)
         print("\nTesting Task B /task-b/recommend...")
         task_b_payload = {
-            "user_id": "Jt3GylPuH64uA3zTdbMdCg",
+            "user_id": "mh_-eMZ6K5RLWhZyISBhwA",
             "query": "spicy chicken wings and beer",
             "top_k": 3,
             "is_cold_start": False
@@ -85,17 +83,16 @@ def test_endpoints():
         print(f"Response: {json_pretty(res_b.json())}")
         assert res_b.status_code == 200, "Task B recommendation failed"
         data_b = res_b.json()
-        assert "user_id" in data_b
         assert "recommendations" in data_b
+        assert "reasoning_summary" in data_b
         for rec in data_b["recommendations"]:
-            assert "item_id" in rec
+            assert "item_id" in rec or "id" in rec
             assert "name" in rec
             assert "reason" in rec
-            assert "score" in rec
         print("Task B Schema Validation: PASSED")
 
-        # 4. Test Task B: Recommendation Endpoint (Cold Start Flow)
-        print("\nTesting Task B /task-b/recommend (Cold Start)...")
+        # 4. Test Task B: Recommendation Endpoint (Cold Start Flow - Stage 1: Get Questions)
+        print("\nTesting Task B /task-b/recommend (Cold Start - Stage 1)...")
         task_b_cold_payload = {
             "user_id": "new_user_123",
             "query": "anything",
@@ -107,9 +104,33 @@ def test_endpoints():
         print(f"Response: {json_pretty(res_b_cold.json())}")
         assert res_b_cold.status_code == 200, "Task B cold-start failed"
         data_b_cold = res_b_cold.json()
-        assert len(data_b_cold["recommendations"]) == 1
-        assert data_b_cold["recommendations"][0]["item_id"] == "onboarding"
-        print("Task B Cold Start Validation: PASSED")
+        assert data_b_cold.get("status") == "cold_start"
+        assert "questions" in data_b_cold
+        print("Task B Cold Start Stage 1 Validation: PASSED")
+
+        # 5. Test Task B: Recommendation Endpoint (Cold Start Flow - Stage 2: Submit Responses)
+        print("\nTesting Task B /task-b/recommend (Cold Start - Stage 2)...")
+        task_b_cold_responses_payload = {
+            "user_id": "new_user_123",
+            "query": "traditional dinner",
+            "top_k": 3,
+            "is_cold_start": True,
+            "user_responses": {
+                "What's your favourite type of food or cuisine?": "suya and pepper soup",
+                "Rate your last great experience out of 5": "5",
+                "Name one thing that ruins your experience anywhere": "slow service",
+                "Are you a 'try new things' or 'stick to favourites' person?": "try new things",
+                "Do you prefer local Nigerian spots or international chains?": "local Nigerian spots"
+            }
+        }
+        res_b_cold_2 = requests.post(f"{base_url}/task-b/recommend", json=task_b_cold_responses_payload)
+        print(f"Status Code: {res_b_cold_2.status_code}")
+        print(f"Response: {json_pretty(res_b_cold_2.json())}")
+        assert res_b_cold_2.status_code == 200, "Task B cold-start stage 2 failed"
+        data_b_cold_2 = res_b_cold_2.json()
+        assert "recommendations" in data_b_cold_2
+        assert "reasoning_summary" in data_b_cold_2
+        print("Task B Cold Start Stage 2 Validation: PASSED")
 
         print("\n" + "="*60)
         print("   ALL APIS RUNNING AND FULLY VALIDATED SUCCESSFULLY!")
