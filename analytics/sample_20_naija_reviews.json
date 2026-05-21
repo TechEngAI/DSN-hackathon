@@ -1,0 +1,182 @@
+[
+  {
+    "user_id": "Jt3GylPuH64uA3zTdbMdCg",
+    "item_id": "amazon_1",
+    "rating": 4.1,
+    "review_text": "I had a great time at the parlour Sample entry 1. The drinks were cold, and the get pepper food was sweet well-well. The oga and the boy did a great job, no long thing at all!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Beer_Parlour_Regular",
+    "rating_bias": "appreciative_inclined"
+  },
+  {
+    "user_id": "Jt3GylPuH64uA3zTdbMdCg",
+    "item_id": "yelp_jaxMSoInw8Poo3XeMJt8lQ",
+    "rating": 4.6,
+    "review_text": "I had a great time at the joint Adams Dental. The drinks were cold, and the get pepper food was delicious. The madam and the boy did a great job, no long thing at all!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Beer_Parlour_Regular",
+    "rating_bias": "appreciative_inclined"
+  },
+  {
+    "user_id": "n-lBS02-3yvlY5Q91mmwDA",
+    "item_id": "yelp_ljxNT9p0y7YMPx0fcNBGig",
+    "rating": 2.5,
+    "review_text": "I was disappointed with the parlour Tony's Restaurant & 3rd Street Cafe. The waiting time was too long, the drinks were warm, and the oga was rude. Very over-billing, lager cold correct!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Beer_Parlour_Regular",
+    "rating_bias": "critically_inclined"
+  },
+  {
+    "user_id": "n-lBS02-3yvlY5Q91mmwDA",
+    "item_id": "yelp_cVBxfMC4lp3DnocjYA3FHQ",
+    "rating": 1.8,
+    "review_text": "I was money waste with the joint Paws The Cat Cafe. The long thing was too long, the drinks were warm, and the oga at the top was rude. Very over-billing, beta parlour to hang out!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Beer_Parlour_Regular",
+    "rating_bias": "critically_inclined"
+  },
+  {
+    "user_id": "NUtIAX-ygn474tDg5nmesg",
+    "item_id": "yelp_rBmpy_Y1UbBx8ggHlyb7hA",
+    "rating": 4.0,
+    "review_text": "I had a great time at the parlour Arizona Truck Outfitters. The drinks were cold, and the get pepper food was delicious. The oga at the top and the boy did a great job, lager cold correct!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Beer_Parlour_Regular",
+    "rating_bias": "appreciative_inclined"
+  },
+  {
+    "user_id": "NUtIAX-ygn474tDg5nmesg",
+    "item_id": "yelp_sqSqqLy0sN8n2IZrAbzidQ",
+    "rating": 4.9,
+    "review_text": "I had a great time at the joint Domino's Pizza. The drinks were cold, and the spicy food was correct. The madam and the steward did a great job, lager cold correct!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Beer_Parlour_Regular",
+    "rating_bias": "appreciative_inclined"
+  },
+  {
+    "user_id": "0Igx-a1wAstiBDerGxXk2A",
+    "item_id": "yelp_QdN72BWoyFypdGJhhI5r7g",
+    "rating": 4.8,
+    "review_text": "Amazing night out at the joint Bar One. The chapman was sweet well-well and the atmosphere was great. The manager and the attendant were very polite.",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Detty_December_Vibe",
+    "rating_bias": "appreciative_inclined"
+  },
+  {
+    "user_id": "0Igx-a1wAstiBDerGxXk2A",
+    "item_id": "yelp_mWMc6_wTdE0EUBKIGXDVfA",
+    "rating": 4.5,
+    "review_text": "Amazing night out at the parlour Perkiomen Valley Brewery. The mixed drink was sweet well-well and the atmosphere was great. The madam and the boy were very polite, turn up correct!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Detty_December_Vibe",
+    "rating_bias": "appreciative_inclined"
+  },
+  {
+    "user_id": "xjQSpme1Z7Xw8XehRLpYuA",
+    "item_id": "yelp_fSCNwMtNNQY9QT69Cj9fiA",
+    "rating": 1.6,
+    "review_text": "I was my eye clear with the pub Sierra Pro Events. The chapman was bad, the waste time was a waste, and the madam was rude. Very expensive.",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Detty_December_Vibe",
+    "rating_bias": "critically_inclined"
+  },
+  {
+    "user_id": "xjQSpme1Z7Xw8XehRLpYuA",
+    "item_id": "yelp_0qNpTGTcqPwOLi2hADx4Xw",
+    "rating": 1.5,
+    "review_text": "I was my eye clear with the pub Charlie's Market. The chapman was bad, the waste time was a waste, and the manager was rude. Very expensive, standard lifestyle!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Detty_December_Vibe",
+    "rating_bias": "critically_inclined"
+  },
+  {
+    "user_id": "vYMvOTL31e0KbTo9Hd0tjg",
+    "item_id": "amazon_2",
+    "rating": 4.2,
+    "review_text": "I had a great time at the joint Sample entry 2. The drinks were cold, and the pepper go kill person food was sweet die. The oga and the attendant did a great job, joint make sense well-well!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Beer_Parlour_Regular",
+    "rating_bias": "appreciative_inclined"
+  },
+  {
+    "user_id": "vYMvOTL31e0KbTo9Hd0tjg",
+    "item_id": "yelp_0qNpTGTcqPwOLi2hADx4Xw",
+    "rating": 4.7,
+    "review_text": "I had a great time at the joint Charlie's Market. The drinks were cold, and the get pepper food was delicious. The oga and the boy did a great job.",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Beer_Parlour_Regular",
+    "rating_bias": "appreciative_inclined"
+  },
+  {
+    "user_id": "Uk3X2AypU8AqvcYEVf7s6Q",
+    "item_id": "yelp_ABxoFuzZy5mqQ8C5FJJajQ",
+    "rating": 4.7,
+    "review_text": "Amazing night out at the joint Core de Roma. The mixed drink was correct and the atmosphere was great. The madam and the attendant were very polite.",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Detty_December_Vibe",
+    "rating_bias": "appreciative_inclined"
+  },
+  {
+    "user_id": "Uk3X2AypU8AqvcYEVf7s6Q",
+    "item_id": "yelp_lwItZ1Ck3KtpCgG4CPFmpQ",
+    "rating": 4.5,
+    "review_text": "Amazing night out at the joint Stomel Elliot Attorney-At-Law. The mixed drink was sweet die and the atmosphere was great. The oga at the top and the steward were very polite, detty december vibe!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Detty_December_Vibe",
+    "rating_bias": "appreciative_inclined"
+  },
+  {
+    "user_id": "Xw7ZjaGfr0WNVt6s_5KZfA",
+    "item_id": "yelp_kV_Q1oqis8Qli8dUoGpTyQ",
+    "rating": 4.6,
+    "review_text": "I had a great time at the parlour Ardmore Pizza. The drinks were cold, and the pepper go kill person food was delicious. The oga at the top and the boy did a great job, no long thing at all!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Beer_Parlour_Regular",
+    "rating_bias": "appreciative_inclined"
+  },
+  {
+    "user_id": "Xw7ZjaGfr0WNVt6s_5KZfA",
+    "item_id": "yelp_txyXRytGjwOXvS8s4sc-WA",
+    "rating": 4.1,
+    "review_text": "I had a great time at the joint Smoothie King. The drinks were cold, and the spicy food was sweet die. The madam and the attendant did a great job.",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Beer_Parlour_Regular",
+    "rating_bias": "appreciative_inclined"
+  },
+  {
+    "user_id": "758g6NGLp9deCbvowz62Ww",
+    "item_id": "yelp_MTSW4McQd7CbVtyjqoe9mw",
+    "rating": 2.0,
+    "review_text": "I was money waste with the joint St Honore Pastries. The chapman was bad, the long thing was a waste, and the oga at the top was rude. Very tear pocket, turn up correct!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Detty_December_Vibe",
+    "rating_bias": "critically_inclined"
+  },
+  {
+    "user_id": "758g6NGLp9deCbvowz62Ww",
+    "item_id": "yelp_il_Ro8jwPlHresjw9EGmBg",
+    "rating": 2.3,
+    "review_text": "I was my eye clear with the joint Denny's. The chapman was bad, the delay was a waste, and the madam was rude. Very expensive, no dulling at all!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Detty_December_Vibe",
+    "rating_bias": "critically_inclined"
+  },
+  {
+    "user_id": "w5iiF7drL4mKBBO8oAUQqg",
+    "item_id": "yelp_2xVsWBNFwZOxIOdd9Mwnww",
+    "rating": 1.2,
+    "review_text": "I was i vex with the joint Cheeseburger In Paradise. The waiting time was too long, the drinks were warm, and the oga was rude. Very expensive, no long thing at all!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Beer_Parlour_Regular",
+    "rating_bias": "critically_inclined"
+  },
+  {
+    "user_id": "w5iiF7drL4mKBBO8oAUQqg",
+    "item_id": "yelp_xM6LoUcnpDpMBzXs_7dXAg",
+    "rating": 1.4,
+    "review_text": "I was money waste with the parlour Fairfield Inn & Suites. The waiting time was too long, the drinks were warm, and the madam was rude. Very expensive, no long thing at all!",
+    "naija_cues_applied": true,
+    "lifestyle_profile": "Beer_Parlour_Regular",
+    "rating_bias": "critically_inclined"
+  }
+]

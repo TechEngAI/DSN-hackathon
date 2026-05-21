@@ -258,10 +258,26 @@ def generate_review(request: GenerateReviewRequest) -> GenerateReviewResponse:
     # Step 4: Validate rating is within 1-5 range
     rating = float(result.get("rating", 3.0))
     rating = min(5.0, max(1.0, rating))
+    review_text = str(result.get("review_text", ""))
+
+    # Apply Nigerian Context Layer post-processing if user persona asks for it
+    if persona.get("naija_cues"):
+        try:
+            from utils.naija_localization import NaijaLocalizer
+        except ImportError:
+            import sys
+            import os
+            sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+            from utils.naija_localization import NaijaLocalizer
+        
+        localizer = NaijaLocalizer()
+        lifestyle = persona.get("lifestyle_profile")
+        review_text = localizer.localize_text(review_text, lifestyle)
 
     # Step 5: Return structured response
     return GenerateReviewResponse(
         rating=rating,
-        review_text=str(result.get("review_text", "")),
+        review_text=review_text,
         reasoning=str(result.get("reasoning", ""))
     )
+

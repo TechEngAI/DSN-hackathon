@@ -22,7 +22,9 @@ class VectorStore:
 
         try:
             if use_local:
-                self.client = chromadb.Client()
+                app_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                persist_dir = os.path.join(app_dir, "data", "chroma_db")
+                self.client = chromadb.PersistentClient(path=persist_dir)
                 self.collection = self.client.get_or_create_collection(name=self.collection_name)
                 self.connection_error = None
                 return

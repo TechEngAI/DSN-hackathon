@@ -20,35 +20,35 @@ Track tasks assigned to **JahsFavour** (Data Engineer / Research Lead) from the 
 - [x] **Profile 500 sample users** *(Completed: analyzed 2,000 users in `run_analysis.py`)*
 - [x] **Note Naija review patterns** *(Completed: documented in [docs/behavioral_template.md](file:///c:/Users/ADMIN/Documents/my-bct/docs/behavioral_template.md))*
 
-### ⏳ Day 2: Task A User Modeling (May 20)
-- [ ] **Build persona extractor (JSON)**
-- [ ] **EDA on rating distributions**
-- [ ] **Extract Naija cues from text**
-- [ ] **Validate 10 sample personas**
+### 🏁 Day 2: Task A User Modeling (May 20)
+- [x] **Build persona extractor (JSON)**
+- [x] **EDA on rating distributions**
+- [x] **Extract Naija cues from text**
+- [x] **Validate 10 sample personas**
 
-### ⏳ Day 3: Task B Recommendation (May 21)
-- [ ] **Prepare item metadata CSV**
-- [ ] **Generate item embeddings**
-- [ ] **Index items into ChromaDB**
-- [ ] **Test similarity search queries**
+### 🏁 Day 3: Task B Recommendation (May 21)
+- [x] **Prepare item metadata CSV**
+- [x] **Generate item embeddings**
+- [x] **Index items into ChromaDB**
+- [x] **Test similarity search queries**
 
-### ⏳ Day 4: Nigerian Context + Integration (May 22)
-- [ ] **Build Naija phrase dictionary**
-- [ ] **Cultural items dataset**
-- [ ] **Inject context into persona flow**
-- [ ] **Sample 20 Naija review outputs**
+### 🏁 Day 4: Nigerian Context + Integration (May 22)
+- [x] **Build Naija phrase dictionary** *(Completed: mapped keywords/slangs in cultural_proxy_map.json)*
+- [x] **Cultural items dataset** *(Completed: generated and indexed 10 custom Nigerian locations in ChromaDB)*
+- [x] **Inject context into persona flow** *(Completed: integrated NaijaLocalizer into the FastAPI Task A generation workflow)*
+- [x] **Sample 20 Naija review outputs** *(Completed: saved 20 sample localized reviews to analytics/sample_20_naija_reviews.json)*
 
-### ⏳ Day 5: Metrics & Evaluation (May 23)
-- [ ] **Run ROUGE-L scoring**
-- [ ] **Compute BERTScore F1**
-- [ ] **Calculate RMSE on ratings**
-- [ ] **Log all results to CSV**
+### 🏁 Day 5: Metrics & Evaluation (May 23)
+- [x] **Run ROUGE-L scoring** *(Completed: computed word-level LCS ROUGE-L F1 on validation reviews)*
+- [x] **Compute BERTScore F1** *(Completed: computed embedding cosine similarity F1 equivalent using MiniLM)*
+- [x] **Calculate RMSE on ratings** *(Completed: calculated RMSE of rating predictions against ground truth validation records)*
+- [x] **Log all results to CSV** *(Completed: stored summary and per-user logs in analytics/evaluation_results.csv)*
 
-### ⏳ Day 6: Paper, Polish & Submit (May 24)
-- [ ] **Write paper sections 1-4**
-- [ ] **Architecture diagram in paper**
-- [ ] **Experiment tables + Naija section**
-- [ ] **Final proofread of paper**
+### 🏁 Day 6: Paper, Polish & Submit (May 24)
+- [x] **Write paper sections 1-4** *(Completed: wrote solution paper in docs/solution_paper.md)*
+- [x] **Architecture diagram in paper** *(Completed: designed system architecture flowchart in Mermaid)*
+- [x] **Experiment tables + Naija section** *(Completed: documented metrics results and linguistic proxy tables in docs/solution_paper.md)*
+- [x] **Final proofread of paper** *(Completed: verified document structure, references, and diagrams)*
 
 ## Methodology
 To avoid downloading the entire 8 GB Yelp Academic Dataset, we implemented a workaround using **HTTP Range Requests** (`Range: bytes=...`) against a public Hugging Face mirror (`ShengxiangLin/Yelp-JSON`). We fetched only the first few kilobytes (or megabytes for the large user file) of each raw `.json` file and cleaned up truncated lines at the end. This generated perfect, lightweight local files for schema inspection.
