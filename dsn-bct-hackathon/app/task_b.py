@@ -5,11 +5,9 @@ from typing import Any, Optional
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
-from app.llm_client import LLMClient
 from app.startup import app_state
 
 router = APIRouter(tags=["Task B"])
-llm_client = LLMClient()
 
 # Nigerian Context Block used within prompts
 NIGERIAN_CONTEXT_BLOCK = """
@@ -44,15 +42,17 @@ NIGERIAN CULTURAL CONTEXT & REFERENCE DICTIONARY:
 """
 
 
+# Request model for Task B recommendation endpoint
 class RecommendRequest(BaseModel):
-    user_id: str
-    query: str = ""
-    top_k: int = Field(default=5, ge=1, le=50)
-    is_cold_start: bool = False
-    user_responses: Optional[dict[str, str]] = Field(default=None)
-    conversation_history: Optional[list[dict[str, Any]]] = Field(default=None)
+    user_id: str  # Unique identifier for the user
+    query: str = ""  # Optional search query from user
+    top_k: int = Field(default=5, ge=1, le=50)  # Number of recommendations to return (1-50)
+    is_cold_start: bool = False  # Flag indicating if this is a new user with no history
+    user_responses: Optional[dict[str, str]] = Field(default=None)  # Onboarding questionnaire responses for cold-start users
+    conversation_history: Optional[list[dict[str, Any]]] = Field(default=None)  # Multi-turn conversation context
 
 
+# Helper function to extract JSON from LLM response, handling markdown code fences
 def _extract_json(text: str) -> dict[str, Any]:
     try:
         cleaned = text.strip()
@@ -71,15 +71,19 @@ def _extract_json(text: str) -> dict[str, Any]:
         return json.loads(match.group(0))
 
 
+# Query Builder: Constructs semantic search string for ChromaDB retrieval
+# Combines user loves, topics, categories, negates pet peeves, and adds Nigerian context if applicable
 def build_taste_query(persona: dict, top_categories: list[str] = None) -> str:
     """
     Constructs a semantic search string using user loves, top topics,
     historical categories, negation of pet peeves, and Nigerian local terms if applicable.
     """
+    # Extract persona components for query building
     loves = persona.get("loves", [])
     top_topics = persona.get("top_topics", [])
     categories = top_categories or []
 
+    # Build positive query components
     query_parts = []
     if loves:
         query_parts.append(" ".join(loves))
@@ -88,19 +92,21 @@ def build_taste_query(persona: dict, top_categories: list[str] = None) -> str:
     if categories:
         query_parts.append(" ".join(categories))
 
-    # Append negation hints from pet peeves
+    # Add negation hints for pet peeves (what to avoid)
     pet_peeves = persona.get("pet_peeves", [])
     if pet_peeves:
         negation_hints = " ".join(f"avoid {peeve}" for peeve in pet_peeves)
         query_parts.append(negation_hints)
 
-    # Append Nigerian culinary and locality terms if user style has naija cues
+    # Add Nigerian culinary and locality terms if user has Naija cues
     if persona.get("naija_cues", False):
         query_parts.append("suya pepper soup buka Lagos")
 
     return " ".join(query_parts).strip()
 
 
+# Recommendation Engine: Retrieves, ranks, and explains personalized recommendations
+# Returns JSON with recommendations list and reasoning_summary
 def recommend_logic(
     persona: dict,
     query: str,
@@ -112,21 +118,21 @@ def recommend_logic(
     Retrieves candidates using semantic search, ranks them using the LLM based on user profile
     and conversation context, and returns recommendations with reasoning.
     """
-    # 1. Build taste query
+    # Step 1: Build semantic search query from persona
     taste_query = build_taste_query(persona, top_categories)
 
-    # Append user query if provided
+    # Step 2: Append user's explicit query if provided
     full_search_query = taste_query
     if query:
         full_search_query = f"{taste_query} {query}".strip()
 
-    # 2. Search ChromaDB for 20 candidates
+    # Step 3: Search ChromaDB vector store for 20 candidate items
     vector_store = app_state.get("vector_store")
     candidates = []
     if vector_store:
         candidates = vector_store.search(full_search_query, n_results=20)
 
-    # Clean and structure candidate representations
+    # Step 4: Clean and structure candidate data from search results
     valid_candidates = []
     for idx, match in enumerate(candidates):
         if match.get("id") in ["vector-store-unavailable", "search-error"]:
@@ -145,13 +151,14 @@ def recommend_logic(
             "description": doc
         })
 
+    # Step 5: Handle case where no candidates found
     if not valid_candidates:
         return {
             "recommendations": [],
             "reasoning_summary": "No matching candidate businesses were found."
         }
 
-    # 3. Format conversation history context if present
+    # Step 6: Format conversation history for multi-turn context
     history_block = ""
     if conversation_history:
         history_block = "\nCONVERSATION HISTORY:\n"
@@ -160,11 +167,11 @@ def recommend_logic(
             content = str(msg.get("content", ""))
             history_block += f"- {role}: {content}\n"
 
-    # Append current query if it's not already at the end of the history
+    # Step 7: Append current query if not already in history
     if query and (not conversation_history or conversation_history[-1].get("content") != query):
         history_block += f"- User (Latest): {query}\n"
 
-    # 4. Formulate the LLM ranking prompt
+    # Step 8: Formulate LLM ranking prompt with persona, history, and candidates
     prompt = (
         "You are an advanced recommendation system. Select and rank the best business recommendations for this user persona.\n\n"
         f"USER PERSONA:\n{json.dumps(persona, indent=2)}\n"
@@ -197,23 +204,26 @@ def recommend_logic(
         "Strictly output only the raw JSON. Do not include markdown code fences or conversational text."
     )
 
-    raw_response = llm_client.generate(prompt=prompt, system_prompt=system_prompt)
+    # Step 9: Call LLM to rank and select top recommendations
+    raw_response = app_state["llm"].generate(prompt=prompt, system_prompt=system_prompt)
     try:
         parsed = _extract_json(raw_response)
         recs = parsed.get("recommendations", [])
 
-        # Ensure both 'id' and 'item_id' are present in each recommendation item for bulletproof integration
+        # Ensure both 'id' and 'item_id' fields exist for integration compatibility
         for r in recs:
             if "item_id" not in r and "id" in r:
                 r["item_id"] = r["id"]
             elif "id" not in r and "item_id" in r:
                 r["id"] = r["item_id"]
 
+        # Step 10: Return ranked recommendations with reasoning
         return {
             "recommendations": recs,
             "reasoning_summary": parsed.get("reasoning_summary", "Tailored list compiled for your preferences.")
         }
     except Exception:
+        # Fallback: Return top candidates by category if LLM fails
         fallback_recs = []
         for c in valid_candidates[:top_k]:
             fallback_recs.append({
@@ -228,6 +238,8 @@ def recommend_logic(
         }
 
 
+# Cold-Start Persona Builder: Creates initial persona from onboarding questionnaire
+# Used when user has no review history (worth 25 points in scoring)
 def build_starter_persona(user_responses: dict) -> dict:
     """
     Builds a starter user persona JSON from onboarding questionnaire answers.
@@ -260,10 +272,12 @@ def build_starter_persona(user_responses: dict) -> dict:
         "Strictly output only the raw JSON. Do not include markdown code fences or conversational text."
     )
 
-    raw_response = llm_client.generate(prompt=prompt, system_prompt=system_prompt)
+    # Call LLM to build persona from onboarding responses
+    raw_response = app_state["llm"].generate(prompt=prompt, system_prompt=system_prompt)
     try:
         return _extract_json(raw_response)
     except Exception:
+        # Fallback: Return generic persona if LLM fails
         return {
             "avg_rating": 4.0,
             "tone": "casual",
@@ -276,15 +290,19 @@ def build_starter_persona(user_responses: dict) -> dict:
         }
 
 
+# FastAPI endpoint for Task B: Generate personalized recommendations
+# POST /task-b/recommend
+# Handles both cold-start (new users) and normal recommendation flows
 @router.post("/recommend")
 def recommend(request: RecommendRequest) -> Any:
-    # Check if cold-start mode is explicitly set or if user history indicates a cold start (no reviews)
+    # Step 1: Check if this is a cold-start user (no review history)
     user_history = app_state["user_history"].get_history(request.user_id)
     is_cold = request.is_cold_start or user_history.get("is_cold_start", False)
 
+    # Step 2: Handle cold-start flow
     if is_cold:
         if not request.user_responses:
-            # Onboarding stage: return the list of questions
+            # Cold-start stage 1: Return onboarding questions
             return {
                 "status": "cold_start",
                 "questions": [
@@ -296,7 +314,7 @@ def recommend(request: RecommendRequest) -> Any:
                 ]
             }
         else:
-            # Onboarding submission stage: build starter persona, then recommend
+            # Cold-start stage 2: Build persona from responses and recommend
             starter_persona = build_starter_persona(request.user_responses)
             return recommend_logic(
                 persona=starter_persona,
@@ -306,7 +324,7 @@ def recommend(request: RecommendRequest) -> Any:
                 conversation_history=request.conversation_history
             )
 
-    # Normal recommendation flow
+    # Step 3: Normal recommendation flow for existing users
     from app.task_a import build_persona
     persona = build_persona(user_history)
 

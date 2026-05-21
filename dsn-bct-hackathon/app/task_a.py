@@ -5,11 +5,9 @@ from typing import Any
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
-from app.llm_client import LLMClient
 from app.startup import app_state
 
 router = APIRouter(tags=["Task A"])
-llm_client = LLMClient()
 
 # Nigerian Context Block used within prompts
 NIGERIAN_CONTEXT_BLOCK = """
@@ -44,18 +42,21 @@ NIGERIAN CULTURAL CONTEXT & REFERENCE DICTIONARY:
 """
 
 
+# Request model for Task A review generation endpoint
 class GenerateReviewRequest(BaseModel):
-    user_id: str
-    item_id: str
-    persona: dict[str, Any] = Field(default_factory=dict)
+    user_id: str  # Unique identifier for the user
+    item_id: str  # ID of the business/item to generate review for
+    persona: dict[str, Any] = Field(default_factory=dict)  # Optional pre-built persona (if not provided, will be built from history)
 
 
+# Response model for Task A review generation endpoint
 class GenerateReviewResponse(BaseModel):
-    rating: float = Field(ge=1.0, le=5.0)
-    review_text: str
-    reasoning: str
+    rating: float = Field(ge=1.0, le=5.0)  # Generated star rating (1-5)
+    review_text: str  # Generated review text matching user persona
+    reasoning: str  # Explanation of why this rating and review were chosen
 
 
+# Helper function to extract JSON from LLM response, handling markdown code fences
 def _extract_json(text: str) -> dict[str, Any]:
     try:
         # First, try to clean potential markdown fences
@@ -75,11 +76,14 @@ def _extract_json(text: str) -> dict[str, Any]:
         return json.loads(match.group(0))
 
 
+# Persona Builder: Extracts user behavioral profile from historical reviews
+# Returns JSON with avg_rating, tone, top_topics, pet_peeves, loves, review_length, naija_cues, sample_phrases
 def build_persona(user_history: dict) -> dict:
     """
     Builds a detailed profile/persona of the user from their historical reviews,
     identifying their preference patterns, tone, loves, and pet peeves.
     """
+    # Handle cold start users (no review history)
     if user_history.get("is_cold_start", False) or not user_history.get("reviews"):
         return {
             "avg_rating": 3.0,
@@ -92,7 +96,7 @@ def build_persona(user_history: dict) -> dict:
             "sample_phrases": []
         }
 
-    # Format historical reviews into a readable format for LLM review
+    # Format historical reviews into a readable format for LLM analysis
     reviews_block = ""
     for idx, review in enumerate(user_history.get("reviews", []), 1):
         stars = review.get("stars", "N/A")
@@ -128,11 +132,12 @@ def build_persona(user_history: dict) -> dict:
         "Strictly output only the raw JSON. Do not include markdown code fences or conversational text."
     )
 
-    raw_response = llm_client.generate(prompt=prompt, system_prompt=system_prompt)
+    # Call LLM to extract persona from review history
+    raw_response = app_state["llm"].generate(prompt=prompt, system_prompt=system_prompt)
     try:
         return _extract_json(raw_response)
     except Exception:
-        # Extremely robust fallback skeleton
+        # Fallback: Return basic persona from user history if LLM fails
         return {
             "avg_rating": float(user_history.get("avg_rating", 3.0)),
             "tone": "casual",
@@ -145,13 +150,15 @@ def build_persona(user_history: dict) -> dict:
         }
 
 
+# Review Generator: Simulates a user review for an unseen item based on persona
+# Returns JSON with rating, review_text, and reasoning
 def generate_review_logic(persona: dict, item: dict) -> dict:
     """
     Generates a review for an item that perfectly aligns with the given persona.
     """
     item_id = item.get("item_id")
 
-    # Try to find business details in memory
+    # Step 1: Try to find business details in app_state memory
     businesses = app_state.get("businesses", [])
     matched_business = None
     for b in businesses:
@@ -167,7 +174,7 @@ def generate_review_logic(persona: dict, item: dict) -> dict:
         item_name = matched_business.get("name", "")
         item_category = matched_business.get("categories", "")
 
-    # Query the vector store to enrich business information
+    # Step 2: Query ChromaDB vector store to enrich business information
     vector_store = app_state.get("vector_store")
     if vector_store:
         search_results = vector_store.search(item_id, n_results=1)
@@ -180,6 +187,7 @@ def generate_review_logic(persona: dict, item: dict) -> dict:
                 item_category = meta.get("primary_category") or ""
             item_description = doc
 
+    # Step 3: Fallback if no business details found
     if not item_name:
         item_name = item.get("name") or f"Business {item_id}"
     if not item_category:
@@ -218,10 +226,12 @@ def generate_review_logic(persona: dict, item: dict) -> dict:
         "Strictly output only the raw JSON. Do not include markdown code fences or conversational text."
     )
 
-    raw_response = llm_client.generate(prompt=prompt, system_prompt=system_prompt)
+    # Step 4: Call LLM to generate review matching persona
+    raw_response = app_state["llm"].generate(prompt=prompt, system_prompt=system_prompt)
     try:
         return _extract_json(raw_response)
     except Exception:
+        # Fallback: Return generic review if LLM fails
         return {
             "rating": persona.get("avg_rating") or 3.5,
             "review_text": f"This place {item_name} is okay. The experience was solid and fits my expectations.",
@@ -229,23 +239,27 @@ def generate_review_logic(persona: dict, item: dict) -> dict:
         }
 
 
+# FastAPI endpoint for Task A: Generate a review for an unseen item based on user persona
+# POST /task-a/generate-review
 @router.post("/generate-review", response_model=GenerateReviewResponse)
 def generate_review(request: GenerateReviewRequest) -> GenerateReviewResponse:
-    # 1. Retrieve user history
+    # Step 1: Retrieve user history from app_state
     user_history = app_state["user_history"].get_history(request.user_id)
 
-    # 2. Extract or build persona
+    # Step 2: Use provided persona or build from user history
     persona = request.persona
     if not persona:
         persona = build_persona(user_history)
 
-    # 3. Generate review based on persona and item
+    # Step 3: Generate review based on persona and item details
     item = {"item_id": request.item_id}
     result = generate_review_logic(persona, item)
 
+    # Step 4: Validate rating is within 1-5 range
     rating = float(result.get("rating", 3.0))
     rating = min(5.0, max(1.0, rating))
 
+    # Step 5: Return structured response
     return GenerateReviewResponse(
         rating=rating,
         review_text=str(result.get("review_text", "")),
