@@ -6,11 +6,12 @@ class AmazonIndexer:
         self.vector_store = vector_store
         self.loader = AmazonDataLoader()
 
-    def index_products(self, products: list[dict], batch_size: int = 100) -> None:
+    def index_products(self, products: list[dict], batch_size: int = 100) -> int:
         if getattr(self.vector_store, "connection_error", None):
             print(f"Amazon indexing skipped: {self.vector_store.connection_error}")
             print(f"ChromaDB collection count: {self.vector_store.get_collection_count()}")
-            return
+            print("[Amazon] Records indexed: 0")
+            return 0
 
         indexed_so_far = 0
         for start in range(0, len(products), batch_size):
@@ -42,12 +43,28 @@ class AmazonIndexer:
             except Exception:
                 continue
 
+        print(f"[Amazon] Records indexed: {indexed_so_far}")
         print(f"ChromaDB collection count: {self.vector_store.get_collection_count()}")
+        return indexed_so_far
 
     def is_amazon_indexed(self) -> bool:
-        try:
-            results = self.vector_store.search("amazon product", n_results=1)
-        except Exception:
-            return False
+        return self.get_amazon_indexed_count(limit=1) > 0
 
-        return any((result.get("metadata") or {}).get("domain") == "amazon" for result in results)
+    def get_amazon_indexed_count(self, limit: int | None = None) -> int:
+        if getattr(self.vector_store, "connection_error", None):
+            return 0
+
+        collection = getattr(self.vector_store, "collection", None)
+        if collection is None:
+            return 0
+
+        try:
+            kwargs = {"where": {"domain": "amazon"}, "include": ["metadatas"]}
+            if limit is not None:
+                kwargs["limit"] = limit
+            results = collection.get(**kwargs)
+        except Exception:
+            return 0
+
+        ids = results.get("ids") or []
+        return len(ids)

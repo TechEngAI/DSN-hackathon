@@ -4,3 +4,5 @@ chromadb==0.6.3
 anthropic==0.45.2
 python-dotenv==1.0.1
 pydantic==2.10.6
+groq
+numpy

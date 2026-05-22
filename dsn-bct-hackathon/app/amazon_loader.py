@@ -1,4 +1,5 @@
 import json
+import os
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -10,8 +11,13 @@ class AmazonDataLoader:
         products: list[dict] = []
         path = Path(filepath)
 
+        print(f"[Amazon] Looking for data at: {filepath}")
+        print(f"[Amazon] File exists: {os.path.exists(filepath)}")
+        print(f"[Amazon] File size: {os.path.getsize(filepath) if os.path.exists(filepath) else 0} bytes")
+
         if not path.exists():
             print(f"Amazon metadata file not found: {filepath}")
+            print("[Amazon] Records parsed: 0")
             return products
 
         with path.open("r", encoding="utf-8") as file:
@@ -44,6 +50,7 @@ class AmazonDataLoader:
                 if len(products) % 500 == 0:
                     print(f"Loaded {len(products)} Amazon products...")
 
+        print(f"[Amazon] Records parsed: {len(products)}")
         return products
 
     def load_reviews(self, filepath: str, limit: int = 10000) -> list[dict]:

@@ -1,4 +1,25 @@
+import re
 from typing import Any
+
+MIN_COLD_START_SIMILARITY = 0.65
+
+
+def normalize_city(city: str) -> str:
+    city = str(city or "").split(",", maxsplit=1)[0].strip()
+    return city.title()
+
+
+def _join_unique_query_parts(parts: list[Any]) -> str:
+    seen: set[str] = set()
+    unique_parts: list[str] = []
+    for part in parts:
+        text = re.sub(r"\s+", " ", str(part or "").strip())
+        key = text.casefold()
+        if not text or key in seen:
+            continue
+        seen.add(key)
+        unique_parts.append(text)
+    return " ".join(unique_parts)
 
 
 class ColdStartHandler:
@@ -22,7 +43,7 @@ class ColdStartHandler:
         1: "preferred_food",
         2: "dining_style",
         3: "budget",
-        4: "spice_preference",
+        4: "openness",
         5: "location",
     }
 
@@ -45,7 +66,7 @@ class ColdStartHandler:
             "preferred_food": "",
             "dining_style": "",
             "budget": "",
-            "spice_preference": "",
+            "openness": "",
             "location": "",
         }
 
@@ -66,30 +87,37 @@ class ColdStartHandler:
     def get_cold_start_recommendations(self, answers: dict, top_k: int = 5) -> list[dict]:
         persona = self.process_onboarding_answers(answers)
         query_parts = [
-            persona.get("spice_preference"),
-            persona.get("dining_style"),
             persona.get("preferred_food"),
+            persona.get("dining_style"),
             persona.get("location"),
-            persona.get("budget"),
         ]
-        query = " ".join(str(part).strip() for part in query_parts if str(part or "").strip())
+        query = _join_unique_query_parts(query_parts)
         if not query:
             query = "popular restaurants food"
 
-        matches = self.vector_store.search(query=query, n_results=top_k)
+        location = str(persona.get("location") or "").strip()
+        location_filter = None
+        if location:
+            normalized_location = normalize_city(location)
+            location_filter = {"city": normalized_location}
+
+        matches = self.vector_store.search(
+            query=query,
+            n_results=max(top_k * 4, 20),
+            where=location_filter,
+            min_score=MIN_COLD_START_SIMILARITY,
+        )
         recommendations: list[dict] = []
 
         answer_summary = self._answer_summary(persona)
         for match in matches:
             metadata: dict[str, Any] = match.get("metadata") or {}
-            item_id = str(
-                metadata.get("business_id")
-                or metadata.get("product_id")
-                or metadata.get("item_id")
-                or match.get("id")
-                or "unknown-item"
-            )
+            item_id = str(metadata.get("business_id") or "").strip()
             name = str(metadata.get("name") or metadata.get("title") or item_id)
+            if not item_id or item_id == name:
+                continue
+            if location and normalize_city(metadata.get("city")) != normalized_location:
+                continue
             domain = str(metadata.get("domain") or "unknown")
             category = str(metadata.get("primary_category") or metadata.get("category") or "relevant category")
             reason = (
@@ -99,6 +127,7 @@ class ColdStartHandler:
 
             recommendations.append(
                 {
+                    "id": item_id,
                     "item_id": item_id,
                     "name": name,
                     "reason": reason,
@@ -119,7 +148,7 @@ class ColdStartHandler:
                 persona.get("preferred_food"),
                 persona.get("dining_style"),
                 persona.get("budget"),
-                persona.get("spice_preference"),
+                persona.get("openness"),
                 persona.get("location"),
             ]
             if str(value or "").strip()
