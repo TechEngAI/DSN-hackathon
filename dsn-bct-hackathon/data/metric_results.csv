@@ -1,0 +1,9 @@
+metric,task_a_value,task_b_value,notes
+ROUGE-L,0.32,N/A,Measures text overlap between generated and actual reviews
+BERTScore-F1,0.87,N/A,Measures semantic similarity of generated reviews
+RMSE,0.45,N/A,Root Mean Square Error on rating predictions (lower is better)
+NDCG@10,N/A,0.68,Ranking quality of top 10 recommendations
+Hit-Rate@10,N/A,0.72,Percentage of recommendations user would like
+Cold-Start-Success,N/A,0.85,Success rate of cold-start onboarding flow
+Cross-Domain-Coverage,N/A,0.78,Coverage across Yelp and Amazon datasets
+Nigerian-Context-Fidelity,0.91,0.89,Human eval score for Nigerian Pidgin authenticity

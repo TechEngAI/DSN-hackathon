@@ -1,0 +1,116 @@
+{
+  "samples": [
+    {
+      "user_id": "user-lagos-foodie",
+      "query": "spicy food",
+      "top_k": 5,
+      "persona": {
+        "avg_rating": 4.2,
+        "tone": "pidgin",
+        "top_topics": ["food", "service"],
+        "pet_peeves": ["slow service"],
+        "loves": ["spicy food", "good vibes"],
+        "review_length": "medium",
+        "naija_cues": true,
+        "sample_phrases": ["e sweet die", "no dulling"]
+      },
+      "recommendations": [
+        {
+          "id": "ng-suya-001",
+          "name": "Yaba Night Suya Spot",
+          "reason": "This spot is perfect for you — suya is spicy and matches your love for bold flavors. No dulling, e sweet die! The service is quick too, no wahala."
+        },
+        {
+          "id": "ng-peppersoup-003",
+          "name": "Abuja Pepper Soup House",
+          "reason": "Pepper soup is exactly your style — hot, spicy, and authentic. The catfish here is fresh and the vibes are calm. Perfect for your taste in spicy Nigerian cuisine."
+        }
+      ],
+      "reasoning_summary": "Selected these spots because you consistently rate spicy food highly and prefer local Nigerian cuisine. All recommendations align with your love for bold flavors and authentic experiences. The service quality at these locations matches your preference for quick, efficient service.",
+      "metrics": {
+        "ndcg_at_10": 0.71,
+        "hit_rate": 0.75
+      }
+    },
+    {
+      "user_id": "user-office-lunch",
+      "query": "quick delivery lunch",
+      "top_k": 3,
+      "persona": {
+        "avg_rating": 4.5,
+        "tone": "casual",
+        "top_topics": ["food", "delivery"],
+        "pet_peeves": ["long wait times"],
+        "loves": ["quick delivery", "hot food"],
+        "review_length": "short",
+        "naija_cues": false,
+        "sample_phrases": ["quick", "convenient"]
+      },
+      "recommendations": [
+        {
+          "id": "ng-jollof-002",
+          "name": "Mama Eko Jollof Kitchen",
+          "reason": "Offers quick delivery with hot, fresh jollof rice. Perfect for office lunch breaks with minimal wait time."
+        },
+        {
+          "id": "ng-suya-001",
+          "name": "Yaba Night Suya Spot",
+          "reason": "Known for fast service and hot, freshly grilled suya. Great for quick lunch options near your office."
+        }
+      ],
+      "reasoning_summary": "These recommendations prioritize quick delivery and hot food, which are your key preferences for office lunches. Both locations have proven track records for fast service and quality.",
+      "metrics": {
+        "ndcg_at_10": 0.68,
+        "hit_rate": 0.70
+      }
+    },
+    {
+      "user_id": "new-user-cold-start",
+      "query": "spicy Nigerian food",
+      "top_k": 5,
+      "is_cold_start": true,
+      "user_responses": {
+        "favorite_food": "spicy Nigerian food like suya and pepper soup",
+        "last_experience_rating": "5",
+        "pet_peeve": "slow service",
+        "try_new_things": "yes",
+        "local_vs_international": "local Nigerian spots"
+      },
+      "starter_persona": {
+        "avg_rating": 4.3,
+        "tone": "pidgin",
+        "top_topics": ["spicy food", "local spots"],
+        "pet_peeves": ["slow service"],
+        "loves": ["suya", "pepper soup", "authentic Nigerian food"],
+        "review_length": "medium",
+        "naija_cues": true,
+        "sample_phrases": ["e sweet die", "no dulling", "abeg"]
+      },
+      "recommendations": [
+        {
+          "id": "ng-suya-001",
+          "name": "Yaba Night Suya Spot",
+          "reason": "Perfect match — you love spicy Nigerian food and this spot is known for hot, fresh suya. Quick service too, no wahala!"
+        },
+        {
+          "id": "ng-peppersoup-003",
+          "name": "Abuja Pepper Soup House",
+          "reason": "Authentic pepper soup with excellent spice level. Matches your preference for local Nigerian cuisine perfectly."
+        }
+      ],
+      "reasoning_summary": "Based on your onboarding responses, you prefer spicy local Nigerian cuisine with quick service. These recommendations prioritize authentic spots with minimal wait times and bold flavors.",
+      "metrics": {
+        "ndcg_at_10": 0.65,
+        "hit_rate": 0.72,
+        "cold_start_success": 0.85
+      }
+    }
+  ],
+  "aggregate_metrics": {
+    "avg_ndcg_at_10": 0.68,
+    "avg_hit_rate": 0.72,
+    "cold_start_success_rate": 0.85,
+    "cross_domain_coverage": 0.78,
+    "nigerian_context_fidelity": 0.89
+  }
+}

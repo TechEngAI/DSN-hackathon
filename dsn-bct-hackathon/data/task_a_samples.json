@@ -1,0 +1,82 @@
+{
+  "samples": [
+    {
+      "user_id": "user-lagos-foodie",
+      "item_id": "ng-suya-001",
+      "persona": {
+        "avg_rating": 4.2,
+        "tone": "pidgin",
+        "top_topics": ["food", "service", "ambience"],
+        "pet_peeves": ["slow service", "high prices"],
+        "loves": ["spicy food", "friendly staff", "good vibes"],
+        "review_length": "medium",
+        "naija_cues": true,
+        "sample_phrases": ["e sweet die", "abeg no dulling", "no cap"]
+      },
+      "generated_review": {
+        "rating": 4.8,
+        "review_text": "Abeg, this suya spot no get rival! The meat e sweet die, spicy just how I like am. The guy wey serve us no waste time at all. Na must you try am — especially if you dey on the island during detty december. No dulling, I go come back for sure!",
+        "reasoning": "User has naija_cues=true and loves spicy food with quick service. Rating reflects their average of 4.2 with strong positive sentiment toward the suya quality and service speed. Generated review uses authentic Nigerian Pidgin with cultural references."
+      },
+      "metrics": {
+        "rouge_l": 0.34,
+        "bert_score_f1": 0.88,
+        "rmse": 0.42
+      }
+    },
+    {
+      "user_id": "user-office-lunch",
+      "item_id": "ng-jollof-002",
+      "persona": {
+        "avg_rating": 4.5,
+        "tone": "casual",
+        "top_topics": ["food", "delivery", "convenience"],
+        "pet_peeves": ["long wait times", "cold food"],
+        "loves": ["quick delivery", "hot food", "office-friendly"],
+        "review_length": "short",
+        "naija_cues": false,
+        "sample_phrases": ["quick", "convenient", "tasty"]
+      },
+      "generated_review": {
+        "rating": 4.6,
+        "review_text": "Great jollof rice! The delivery was super quick to my office and the food arrived hot. Perfect for lunch breaks. Highly recommend for office workers.",
+        "reasoning": "User prioritizes quick delivery and hot food. Rating reflects their preference for convenience and quality. Review is short and professional, matching their office-lunch context."
+      },
+      "metrics": {
+        "rouge_l": 0.29,
+        "bert_score_f1": 0.85,
+        "rmse": 0.48
+      }
+    },
+    {
+      "user_id": "user-abuja-nights",
+      "item_id": "ng-peppersoup-003",
+      "persona": {
+        "avg_rating": 3.8,
+        "tone": "formal",
+        "top_topics": ["quality", "cleanliness", "atmosphere"],
+        "pet_peeves": ["noise", "crowded", "poor hygiene"],
+        "loves": ["quiet atmosphere", "fresh ingredients", "professional service"],
+        "review_length": "long",
+        "naija_cues": false,
+        "sample_phrases": ["excellent", "disappointing", "professional"]
+      },
+      "generated_review": {
+        "rating": 4.0,
+        "review_text": "The pepper soup at this establishment demonstrates commendable quality in ingredient selection and preparation. The catfish is fresh and the broth is well-seasoned. The dining environment is appropriately quiet for a calm evening meal, which aligns well with my preferences. Service was professional and attentive. The only minor concern is the pricing, which is slightly elevated compared to competitors. Overall, a solid dining experience that I would recommend to those seeking quality and tranquility.",
+        "reasoning": "User values quality, cleanliness, and quiet atmosphere. Rating of 4.0 reflects satisfaction with food quality and service, with slight deduction for pricing. Review is formal and detailed, matching their professional communication style."
+      },
+      "metrics": {
+        "rouge_l": 0.31,
+        "bert_score_f1": 0.86,
+        "rmse": 0.44
+      }
+    }
+  ],
+  "aggregate_metrics": {
+    "avg_rouge_l": 0.31,
+    "avg_bert_score_f1": 0.86,
+    "avg_rmse": 0.45,
+    "nigerian_context_fidelity": 0.91
+  }
+}
