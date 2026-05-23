@@ -15,7 +15,7 @@ class LLMClient:
 
         if self.api_key:
             genai.configure(api_key=self.api_key)
-            self.client = genai.GenerativeModel("gemini-1.5-flash")
+            self.client = genai.GenerativeModel("gemini-2.5-flash")
 
     def generate(self, prompt: str, system_prompt: str | None = None) -> str:
         if not self.client:
