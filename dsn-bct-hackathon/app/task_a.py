@@ -47,7 +47,7 @@ class GenerateReviewRequest(BaseModel):
     user_id: str  # Unique identifier for the user
     item_id: str  # ID of the business/item to generate review for
     persona: dict[str, Any] = Field(default_factory=dict)  # Optional pre-built persona (if not provided, will be built from history)
-
+    language: Optional[str] = Field(default=None)  # Chosen language for the output review text
 
 # Response model for Task A review generation endpoint
 class GenerateReviewResponse(BaseModel):
@@ -152,7 +152,7 @@ def build_persona(user_history: dict) -> dict:
 
 # Review Generator: Simulates a user review for an unseen item based on persona
 # Returns JSON with rating, review_text, and reasoning
-def generate_review_logic(persona: dict, item: dict) -> dict:
+def generate_review_logic(persona: dict, item: dict, language: str = None) -> dict:
     """
     Generates a review for an item that perfectly aligns with the given persona.
     """
@@ -210,7 +210,8 @@ def generate_review_logic(persona: dict, item: dict) -> dict:
         "using phrases like 'e sweet die', 'abeg', 'no dulling', 'e dey hit'.\n"
         "3. Emphasize items listed in the persona's 'loves' if they are relevant, or react negatively to items listed in 'pet_peeves' if relevant.\n"
         "4. Calibrate the star rating (between 1.0 and 5.0) to match persona['avg_rating'] and how the business details align with their loves/peeves.\n"
-        "5. Include a reasoning field explaining the rating, tone, and why it perfectly reflects the persona's behaviors.\n\n"
+        "5. Include a reasoning field explaining the rating, tone, and why it perfectly reflects the persona's behaviors.\n"
+        f"6. If a specific language ({language}) is provided, the final review_text MUST be in that language (e.g., Nigerian Pidgin if chosen).\n\n"
         "Return ONLY a valid JSON object matching this exact schema:\n"
         "{\n"
         '  "rating": 4.5,\n'
@@ -253,7 +254,7 @@ def generate_review(request: GenerateReviewRequest) -> GenerateReviewResponse:
 
     # Step 3: Generate review based on persona and item details
     item = {"item_id": request.item_id}
-    result = generate_review_logic(persona, item)
+    result = generate_review_logic(persona, item, language=request.language)
 
     # Step 4: Validate rating is within 1-5 range
     rating = float(result.get("rating", 3.0))

@@ -50,6 +50,7 @@ class RecommendRequest(BaseModel):
     is_cold_start: bool = False  # Flag indicating if this is a new user with no history
     user_responses: Optional[dict[str, str]] = Field(default=None)  # Onboarding questionnaire responses for cold-start users
     conversation_history: Optional[list[dict[str, Any]]] = Field(default=None)  # Multi-turn conversation context
+    language: Optional[str] = Field(default=None)  # Chosen language for recommendations reason and reasoning_summary
 
 
 # Helper function to extract JSON from LLM response, handling markdown code fences
@@ -112,7 +113,8 @@ def recommend_logic(
     query: str,
     top_k: int,
     top_categories: list[str] = None,
-    conversation_history: list = None
+    conversation_history: list = None,
+    language: str = None
 ) -> dict:
     """
     Retrieves candidates using semantic search, ranks them using the LLM based on user profile
@@ -183,7 +185,8 @@ def recommend_logic(
         f"3. If persona['naija_cues'] is true, prioritize candidates that match local tastes (like suya spots, buka cafes, local spots) "
         "and write the 'reason' using subtle Pidgin expressions and local cultural references.\n"
         "4. Provide a 'reasoning_summary' at the top level detailing your overall recommendation strategy and why this batch is perfect for them.\n"
-        "5. For each chosen item, return exact fields: id, name, and reason (1-2 sentences mapping their preference style and current query).\n\n"
+        "5. For each chosen item, return exact fields: id, name, and reason (1-2 sentences mapping their preference style and current query).\n"
+        f"6. If a specific language ({language}) is provided, the 'reasoning_summary' and 'reason' fields MUST be generated in that language.\n\n"
         "Return ONLY a valid JSON object matching this exact schema:\n"
         "{\n"
         '  "reasoning_summary": "summary of overall recommendation strategy",\n'
@@ -321,7 +324,8 @@ def recommend(request: RecommendRequest) -> Any:
                 query=request.query,
                 top_k=request.top_k,
                 top_categories=[],
-                conversation_history=request.conversation_history
+                conversation_history=request.conversation_history,
+                language=request.language
             )
 
     # Step 3: Normal recommendation flow for existing users
@@ -333,5 +337,6 @@ def recommend(request: RecommendRequest) -> Any:
         query=request.query,
         top_k=request.top_k,
         top_categories=user_history.get("top_categories", []),
-        conversation_history=request.conversation_history
+        conversation_history=request.conversation_history,
+        language=request.language
     )
