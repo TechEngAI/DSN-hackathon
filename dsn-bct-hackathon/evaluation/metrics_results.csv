@@ -1,8 +1,0 @@
-metric,value,verdict
-Precision@K,0.60,Solid
-Coverage,0.0032,Expected at test scale
-warm_avg_similarity,0.7934,Healthy
-cold_avg_similarity,0.7923,Healthy
-quality_gap,0.0011,Near perfect parity
-min_latency_ms,36,Cache working
-amazon_products_loaded,2000,Cross-domain active
