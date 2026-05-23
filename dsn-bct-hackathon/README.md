@@ -1,7 +1,7 @@
 # 🏆 Omolúwàbí AI Agentic Recommendation System
 Scaffold & complete implementation for the **DSN x BCT Data & AI Summit Hackathon 3.0**.
 
-This project implements a multi-agent user-persona modeling framework and cross-domain recommendation engine containerized with Docker, complete with an authentic **Nigerian Context Layer** and explicit **Language Choice** options (including natural Nigerian Pidgin).
+This project implements a multi-agent user-persona modeling framework and cross-domain recommendation engine containerized with Docker, complete with an authentic **Nigerian Context Layer** and explicit **Language Choice** options (including natural Nigerian Pidgin)
 
 ---
 
