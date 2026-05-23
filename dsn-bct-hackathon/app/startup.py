@@ -150,12 +150,16 @@ async def startup_event() -> None:
         app_state["vector_store"] = VectorStore()
         app_state["data_loader"] = YelpDataLoader()
 
-        businesses = app_state["data_loader"].load_businesses(str(business_path), limit=5000)
-        reviews = app_state["data_loader"].load_reviews(str(review_path), limit=50000)
-
-        if not businesses and not reviews:
-            print("Full Yelp dataset not found or empty, loading data/sample_data.json")
+        if not business_path.exists() or not review_path.exists():
+            print("Full Yelp dataset files missing, loading data/sample_data.json")
             businesses, reviews = app_state["data_loader"].load_sample_data(str(sample_path))
+        else:
+            businesses = app_state["data_loader"].load_businesses(str(business_path), limit=5000)
+            reviews = app_state["data_loader"].load_reviews(str(review_path), limit=50000)
+
+            if not businesses and not reviews:
+                print("Full Yelp dataset empty, loading data/sample_data.json")
+                businesses, reviews = app_state["data_loader"].load_sample_data(str(sample_path))
 
         app_state["businesses"] = businesses
         app_state["reviews"] = reviews

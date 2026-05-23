@@ -12,6 +12,7 @@ from app.metrics.coverage import track_coverage
 from app.metrics.latency import record_latency
 from app.metrics.precision import calculate_precision_at_k
 from app.metrics.router import router as metrics_router
+from app.language_config import get_language_instruction
 from app.startup import app_state
 
 router = APIRouter(tags=["Task B"])
@@ -63,6 +64,7 @@ class RecommendRequest(BaseModel):
     location: Optional[str] = Field(default=None)  # Optional city/region filter for local recommendations
     user_responses: Optional[dict[str, str]] = Field(default=None)  # Onboarding questionnaire responses for cold-start users
     conversation_history: Optional[list[dict[str, Any]]] = Field(default=None)  # Multi-turn conversation context
+    language_mode: str = Field(default="naija")  # Options: standard | naija | pidgin
 
 
 # Helper function to extract JSON from LLM response, handling markdown code fences
@@ -391,6 +393,23 @@ def build_taste_query(persona: dict, top_categories: list[str] = None) -> str:
     return _dedupe_query_text(_join_unique_query_parts(query_parts))
 
 
+def _format_recommendation_reason(candidate: dict, query: str, language_mode: str) -> str:
+    if language_mode == "standard":
+        return (
+            f"{candidate['name']} is a {candidate['categories']} in {candidate['city']} "
+            f"that matches your search for {query}."
+        )
+    if language_mode == "pidgin":
+        return (
+            f"{candidate['name']} na confirm {candidate['categories']} spot for {candidate['city']} "
+            f"wey match wetin you dey find for {query}. My padi, e dey hit, abeg no dulling."
+        )
+    return (
+        f"{candidate['name']} na confirm {candidate['categories']} spot in {candidate['city']} "
+        f"that matches your search for {query}. No wahala, my guy, this one fit help you chop life."
+    )
+
+
 class ColdStartRecommendRequest(BaseModel):
     user_id: str
     answers: dict
@@ -572,11 +591,14 @@ async def recommend_logic(
     user_responses: dict | None = None,
     background_tasks: BackgroundTasks | None = None,
     request_user_id: str = "",
+    language_mode: str = "naija",
 ) -> dict:
     """
     Retrieves candidates using semantic search, ranks them using the LLM based on user profile
     and conversation context, and returns recommendations with reasoning.
     """
+    lang_instruction = get_language_instruction(language_mode)
+
     # Step 1: Build semantic search query from persona
     taste_query = build_taste_query(persona, top_categories)
 
@@ -675,10 +697,7 @@ async def recommend_logic(
             "id": candidate["id"],
             "item_id": candidate["id"],
             "name": candidate["name"],
-            "reason": (
-                f"{candidate['name']} is a {candidate['categories']} in {candidate['city']} "
-                f"that matches your search for {query}."
-            ),
+            "reason": _format_recommendation_reason(candidate, query, language_mode),
         }
         for candidate in selected_candidates
     ]
@@ -772,6 +791,7 @@ async def recommend_logic(
         f"{NIGERIAN_CONTEXT_BLOCK}\n"
         "Strictly output only the raw JSON. Do not include markdown code fences or conversational text."
     )
+    system_prompt = f"{system_prompt}\n\nLANGUAGE STYLE INSTRUCTION:\n{lang_instruction}"
 
     # Step 4: Generate reasoning_summary via LLM.
     t3 = time.time()
@@ -865,6 +885,7 @@ async def recommend_logic(
             reason_system = (
                 "You are a concise recommendation explanation generator. Output only the reason text."
             )
+            reason_system = f"{reason_system}\n\nLANGUAGE STYLE INSTRUCTION:\n{lang_instruction}"
 
             if llm_client is None:
                 return reason_prompt
@@ -953,10 +974,12 @@ async def recommend_logic(
 
 # Cold-Start Persona Builder: Creates initial persona from onboarding questionnaire
 # Used when user has no review history (worth 25 points in scoring)
-def build_starter_persona(user_responses: dict) -> dict:
+def build_starter_persona(user_responses: dict, language_mode: str = "naija") -> dict:
     """
     Builds a starter user persona JSON from onboarding questionnaire answers.
     """
+    lang_instruction = get_language_instruction(language_mode)
+
     prompt = (
         "A new user has completed the onboarding questionnaire. Build a starter persona JSON based on their answers.\n\n"
         f"ONBOARDING RESPONSES:\n{json.dumps(user_responses, indent=2)}\n\n"
@@ -984,6 +1007,7 @@ def build_starter_persona(user_responses: dict) -> dict:
         f"{NIGERIAN_CONTEXT_BLOCK}\n"
         "Strictly output only the raw JSON. Do not include markdown code fences or conversational text."
     )
+    system_prompt = f"{system_prompt}\n\nLANGUAGE STYLE INSTRUCTION:\n{lang_instruction}"
 
     # Call LLM to build persona from onboarding responses
     raw_response = app_state["llm"].generate(prompt=prompt, system_prompt=system_prompt)
@@ -1032,6 +1056,7 @@ async def recommend(request: RecommendRequest, background_tasks: BackgroundTasks
                 user_responses=starter_persona,
                 background_tasks=background_tasks,
                 request_user_id=request.user_id,
+                language_mode=request.language_mode,
             )
             _track_task_b_metrics(
                 user_id=request.user_id,
@@ -1068,6 +1093,7 @@ async def recommend(request: RecommendRequest, background_tasks: BackgroundTasks
                 user_responses=request.user_responses,
                 background_tasks=background_tasks,
                 request_user_id=request.user_id,
+                language_mode=request.language_mode,
             )
             _track_task_b_metrics(
                 user_id=request.user_id,
@@ -1091,6 +1117,7 @@ async def recommend(request: RecommendRequest, background_tasks: BackgroundTasks
                 user_responses=request.user_responses,
                 background_tasks=background_tasks,
                 request_user_id=request.user_id,
+                language_mode=request.language_mode,
             )
             _track_task_b_metrics(
                 user_id=request.user_id,

@@ -1,75 +1,621 @@
 {
   "businesses": [
     {
-      "business_id": "ng-suya-001",
-      "name": "Yaba Night Suya Spot",
+      "business_id": "NGBIZZ0000000000000001",
+      "name": "Mama Titi's Buka",
       "city": "Lagos",
       "state": "LA",
-      "stars": 4.6,
-      "review_count": 128,
-      "categories": "Suya, Grills, Nigerian, Street Food",
+      "stars": 4.8,
+      "review_count": 642,
+      "categories": "Nigerian, Buka, Jollof Rice, Amala, Local Food",
+      "is_open": 1,
+      "attributes": {
+        "OutdoorSeating": "False",
+        "WiFi": "no",
+        "RestaurantsDelivery": "True",
+        "RestaurantsTakeOut": "True",
+        "RestaurantsPriceRange2": "1"
+      }
+    },
+    {
+      "business_id": "NGBIZZ0000000000000002",
+      "name": "Eko Suya Spot",
+      "city": "Lagos",
+      "state": "LA",
+      "stars": 4.7,
+      "review_count": 518,
+      "categories": "Suya, Grills, Nigerian, Street Food, Late Night",
       "is_open": 1,
       "attributes": {
         "OutdoorSeating": "True",
-        "RestaurantsPriceRange2": "1",
-        "GoodForLateNight": "True"
-      }
-    },
-    {
-      "business_id": "ng-jollof-002",
-      "name": "Mama Eko Jollof Kitchen",
-      "city": "Ikeja",
-      "state": "LA",
-      "stars": 4.8,
-      "review_count": 214,
-      "categories": "Jollof Rice, Nigerian, Fast Food, Lunch",
-      "is_open": 1,
-      "attributes": {
-        "RestaurantsDelivery": "True",
+        "WiFi": "no",
+        "GoodForLateNight": "True",
         "RestaurantsTakeOut": "True",
-        "GoodForLunch": "True"
+        "Alcohol": "beer_and_wine"
       }
     },
     {
-      "business_id": "ng-peppersoup-003",
-      "name": "Abuja Pepper Soup House",
-      "city": "Abuja",
-      "state": "FC",
-      "stars": 4.4,
-      "review_count": 89,
+      "business_id": "NGBIZZ0000000000000003",
+      "name": "Lagos Pepper Soup Joint",
+      "city": "Lagos",
+      "state": "LA",
+      "stars": 4.5,
+      "review_count": 377,
       "categories": "Pepper Soup, Nigerian, Seafood, Casual Dining",
       "is_open": 1,
       "attributes": {
+        "OutdoorSeating": "True",
+        "WiFi": "free",
         "RestaurantsTableService": "True",
         "GoodForDinner": "True",
-        "Alcohol": "beer_and_wine"
+        "NoiseLevel": "average"
+      }
+    },
+    {
+      "business_id": "NGBIZZ0000000000000004",
+      "name": "Abuja Jollof Republic",
+      "city": "Abuja",
+      "state": "AB",
+      "stars": 4.6,
+      "review_count": 284,
+      "categories": "Nigerian, Jollof Rice, Rice Dishes, Family Restaurant",
+      "is_open": 1,
+      "attributes": {
+        "OutdoorSeating": "False",
+        "WiFi": "free",
+        "RestaurantsDelivery": "True",
+        "GoodForKids": "True",
+        "RestaurantsPriceRange2": "2"
+      }
+    },
+    {
+      "business_id": "NGBIZZ0000000000000005",
+      "name": "Port Harcourt Fisherman's Buka",
+      "city": "Port Harcourt",
+      "state": "RI",
+      "stars": 4.4,
+      "review_count": 193,
+      "categories": "African, Nigerian, Seafood, Buka, Native Soup",
+      "is_open": 1,
+      "attributes": {
+        "OutdoorSeating": "True",
+        "WiFi": "no",
+        "RestaurantsTableService": "True",
+        "GoodForGroups": "True",
+        "Alcohol": "full_bar"
+      }
+    },
+    {
+      "business_id": "NGBIZZ0000000000000006",
+      "name": "Chicken Rush Lekki",
+      "city": "Lagos",
+      "state": "LA",
+      "stars": 4.1,
+      "review_count": 221,
+      "categories": "Fast Food, Chicken, Burgers, Fries",
+      "is_open": 1,
+      "attributes": {
+        "OutdoorSeating": "False",
+        "WiFi": "free",
+        "RestaurantsDelivery": "True",
+        "DriveThru": "True",
+        "RestaurantsPriceRange2": "2"
+      }
+    },
+    {
+      "business_id": "NGBIZZ0000000000000007",
+      "name": "Burger Express Abuja",
+      "city": "Abuja",
+      "state": "AB",
+      "stars": 3.9,
+      "review_count": 146,
+      "categories": "Fast Food, Burgers, Milkshakes, Quick Bites",
+      "is_open": 1,
+      "attributes": {
+        "OutdoorSeating": "False",
+        "WiFi": "free",
+        "RestaurantsTakeOut": "True",
+        "GoodForKids": "True",
+        "RestaurantsPriceRange2": "2"
+      }
+    },
+    {
+      "business_id": "NGBIZZ0000000000000008",
+      "name": "Dodo King Ibadan",
+      "city": "Ibadan",
+      "state": "OY",
+      "stars": 4.2,
+      "review_count": 119,
+      "categories": "Fast Food, Plantain, Nigerian Snacks, Quick Bites",
+      "is_open": 1,
+      "attributes": {
+        "OutdoorSeating": "True",
+        "WiFi": "no",
+        "RestaurantsTakeOut": "True",
+        "GoodForLunch": "True",
+        "RestaurantsPriceRange2": "1"
+      }
+    },
+    {
+      "business_id": "NGBIZZ0000000000000009",
+      "name": "Zobo & Chill Cafe",
+      "city": "Lagos",
+      "state": "LA",
+      "stars": 4.6,
+      "review_count": 173,
+      "categories": "Cafe, Juice Bars, Zobo, Smoothies, Light Meals",
+      "is_open": 1,
+      "attributes": {
+        "OutdoorSeating": "True",
+        "WiFi": "free",
+        "BikeParking": "True",
+        "GoodForWorking": "True",
+        "RestaurantsPriceRange2": "2"
+      }
+    },
+    {
+      "business_id": "NGBIZZ0000000000000010",
+      "name": "The Palmwine Press",
+      "city": "Ibadan",
+      "state": "OY",
+      "stars": 4.3,
+      "review_count": 87,
+      "categories": "Cafe, Palmwine, Juice Bar, Small Chops",
+      "is_open": 1,
+      "attributes": {
+        "OutdoorSeating": "True",
+        "WiFi": "free",
+        "RestaurantsTableService": "False",
+        "GoodForGroups": "True",
+        "RestaurantsPriceRange2": "2"
+      }
+    },
+    {
+      "business_id": "NGBIZZ0000000000000011",
+      "name": "Abuja Green Juice Bar",
+      "city": "Abuja",
+      "state": "AB",
+      "stars": 4.5,
+      "review_count": 134,
+      "categories": "Juice Bars, Smoothies, Healthy Food, Cafe",
+      "is_open": 1,
+      "attributes": {
+        "OutdoorSeating": "False",
+        "WiFi": "free",
+        "RestaurantsDelivery": "True",
+        "GoodForBreakfast": "True",
+        "RestaurantsPriceRange2": "2"
+      }
+    },
+    {
+      "business_id": "NGBIZZ0000000000000012",
+      "name": "Skyline Ikoyi Dining",
+      "city": "Lagos",
+      "state": "LA",
+      "stars": 4.9,
+      "review_count": 312,
+      "categories": "Fine Dining, Nigerian Fusion, Seafood, Cocktails",
+      "is_open": 1,
+      "attributes": {
+        "OutdoorSeating": "True",
+        "WiFi": "free",
+        "RestaurantsReservations": "True",
+        "RestaurantsTableService": "True",
+        "RestaurantsPriceRange2": "4"
+      }
+    },
+    {
+      "business_id": "NGBIZZ0000000000000013",
+      "name": "The Calabash Room",
+      "city": "Abuja",
+      "state": "AB",
+      "stars": 4.7,
+      "review_count": 205,
+      "categories": "Fine Dining, African Fusion, Date Night, Wine Bar",
+      "is_open": 1,
+      "attributes": {
+        "OutdoorSeating": "False",
+        "WiFi": "free",
+        "RestaurantsReservations": "True",
+        "RestaurantsTableService": "True",
+        "RestaurantsPriceRange2": "4"
+      }
+    },
+    {
+      "business_id": "NGBIZZ0000000000000014",
+      "name": "Glow Naija Shea Butter Kit",
+      "city": "Lagos",
+      "state": "LA",
+      "stars": 4.6,
+      "review_count": 847,
+      "categories": "Beauty, Skincare, Shea Butter, Natural Products",
+      "is_open": 1,
+      "domain": "amazon",
+      "attributes": {
+        "PrimeEligible": "True",
+        "SkinType": "dry_sensitive",
+        "MadeInNigeria": "True",
+        "FragranceFree": "True",
+        "PriceRange": "medium"
+      }
+    },
+    {
+      "business_id": "NGBIZZ0000000000000015",
+      "name": "Lagos Luxe Ankara Tote",
+      "city": "Ibadan",
+      "state": "OY",
+      "stars": 4.4,
+      "review_count": 64,
+      "categories": "Lifestyle, Fashion, Ankara Bag, Accessories",
+      "is_open": 1,
+      "domain": "amazon",
+      "attributes": {
+        "PrimeEligible": "False",
+        "Material": "ankara_cotton",
+        "Handmade": "True",
+        "Giftable": "True",
+        "PriceRange": "affordable"
       }
     }
   ],
   "reviews": [
     {
-      "review_id": "rev-001",
-      "user_id": "user-lagos-foodie",
-      "business_id": "ng-suya-001",
+      "review_id": "REVNG000000000000000001",
+      "user_id": "user_001_naija_foodie",
+      "business_id": "NGBIZZ0000000000000001",
       "stars": 5.0,
-      "text": "The suya was hot, spicy, and fresh. Perfect stop after work around Yaba.",
-      "date": "2025-07-18 20:14:00"
+      "text": "Mama Titi's Buka no dey disappoint at all. The amala and ewedu e sweet die, abeg the stew was smoky and confirm.",
+      "date": "2022-02-14"
     },
     {
-      "review_id": "rev-002",
-      "user_id": "user-office-lunch",
-      "business_id": "ng-jollof-002",
+      "review_id": "REVNG000000000000000002",
+      "user_id": "user_001_naija_foodie",
+      "business_id": "NGBIZZ0000000000000002",
       "stars": 5.0,
-      "text": "Smoky party-style jollof with soft chicken and quick delivery to the office.",
-      "date": "2025-08-03 13:05:00"
+      "text": "Eko Suya Spot gave me proper pepper and soft meat. My guy, no dulling, this is the kind of suya you carry home with extra onions.",
+      "date": "2022-06-03"
     },
     {
-      "review_id": "rev-003",
-      "user_id": "user-abuja-nights",
-      "business_id": "ng-peppersoup-003",
+      "review_id": "REVNG000000000000000003",
+      "user_id": "user_001_naija_foodie",
+      "business_id": "NGBIZZ0000000000000004",
       "stars": 4.0,
-      "text": "Good catfish pepper soup with enough spice. Nice place for a calm evening meal.",
-      "date": "2025-09-22 19:42:00"
+      "text": "The jollof had party flavour and the chicken was decent. Small delay sha, but no wahala because the rice was still confirm.",
+      "date": "2023-01-21"
+    },
+    {
+      "review_id": "REVNG000000000000000004",
+      "user_id": "user_001_naija_foodie",
+      "business_id": "NGBIZZ0000000000000008",
+      "stars": 4.0,
+      "text": "Dodo King served sweet plantain with pepper sauce that e dey hit. I wish the portion was bigger, abeg, but the taste made sense.",
+      "date": "2023-07-18"
+    },
+    {
+      "review_id": "REVNG000000000000000005",
+      "user_id": "user_001_naija_foodie",
+      "business_id": "NGBIZZ0000000000000011",
+      "stars": 4.0,
+      "text": "Abuja Green Juice Bar is clean and fresh. The smoothie was not too sweet, no wahala, but I still prefer places with hot food.",
+      "date": "2024-03-09"
+    },
+    {
+      "review_id": "REVNG000000000000000006",
+      "user_id": "user_001_naija_foodie",
+      "business_id": "NGBIZZ0000000000000014",
+      "stars": 5.0,
+      "text": "This shea butter kit is confirm for dry skin. It rubbed in well and the scent was gentle, my guy, e sweet die for harmattan.",
+      "date": "2024-10-11"
+    },
+    {
+      "review_id": "REVNG000000000000000007",
+      "user_id": "user_002_lagos_explorer",
+      "business_id": "NGBIZZ0000000000000002",
+      "stars": 5.0,
+      "text": "Late night suya after Lagos traffic? Eko Suya Spot understood the assignment. Pepper balanced, meat juicy, no dulling.",
+      "date": "2022-03-27"
+    },
+    {
+      "review_id": "REVNG000000000000000008",
+      "user_id": "user_002_lagos_explorer",
+      "business_id": "NGBIZZ0000000000000003",
+      "stars": 4.0,
+      "text": "Lagos Pepper Soup Joint has proper catfish pepper soup. It was hot and fresh, but service took time small, abeg they can improve.",
+      "date": "2022-11-05"
+    },
+    {
+      "review_id": "REVNG000000000000000009",
+      "user_id": "user_002_lagos_explorer",
+      "business_id": "NGBIZZ0000000000000006",
+      "stars": 4.0,
+      "text": "Chicken Rush Lekki is good for quick lunch. Fries were crisp and WiFi worked, no wahala, but the burger needs more sauce.",
+      "date": "2023-04-16"
+    },
+    {
+      "review_id": "REVNG000000000000000010",
+      "user_id": "user_002_lagos_explorer",
+      "business_id": "NGBIZZ0000000000000009",
+      "stars": 5.0,
+      "text": "Zobo & Chill Cafe is a proper Lagos work spot. Free WiFi, cold zobo, calm vibe, my guy this place is confirm.",
+      "date": "2023-12-02"
+    },
+    {
+      "review_id": "REVNG000000000000000011",
+      "user_id": "user_002_lagos_explorer",
+      "business_id": "NGBIZZ0000000000000012",
+      "stars": 5.0,
+      "text": "Skyline Ikoyi Dining gave premium vibes. The seafood was fresh, cocktails clean, and the view made the bill feel like no wahala.",
+      "date": "2024-05-19"
+    },
+    {
+      "review_id": "REVNG000000000000000012",
+      "user_id": "user_002_lagos_explorer",
+      "business_id": "NGBIZZ0000000000000015",
+      "stars": 4.0,
+      "text": "The Ankara tote is stylish and sturdy. Delivery was not the fastest, abeg, but the pattern is fine and the quality is confirm.",
+      "date": "2024-09-28"
+    },
+    {
+      "review_id": "REVNG000000000000000013",
+      "user_id": "user_003_abuja_critic",
+      "business_id": "NGBIZZ0000000000000004",
+      "stars": 4.0,
+      "text": "Abuja Jollof Republic has solid rice and good packaging. I expected stronger smoky flavour, but no wahala, it is still dependable.",
+      "date": "2022-01-30"
+    },
+    {
+      "review_id": "REVNG000000000000000014",
+      "user_id": "user_003_abuja_critic",
+      "business_id": "NGBIZZ0000000000000007",
+      "stars": 3.0,
+      "text": "Burger Express Abuja is okay for fast food, but the patty was a bit dry. My guy, sauce would have made it more confirm.",
+      "date": "2022-08-22"
+    },
+    {
+      "review_id": "REVNG000000000000000015",
+      "user_id": "user_003_abuja_critic",
+      "business_id": "NGBIZZ0000000000000011",
+      "stars": 5.0,
+      "text": "Abuja Green Juice Bar is clean, consistent, and fresh. The ginger blend e dey hit, no dulling for morning energy.",
+      "date": "2023-02-13"
+    },
+    {
+      "review_id": "REVNG000000000000000016",
+      "user_id": "user_003_abuja_critic",
+      "business_id": "NGBIZZ0000000000000013",
+      "stars": 5.0,
+      "text": "The Calabash Room is polished and calm. Food presentation was beautiful, service was sharp, and the wine pairing was confirm.",
+      "date": "2023-10-07"
+    },
+    {
+      "review_id": "REVNG000000000000000017",
+      "user_id": "user_003_abuja_critic",
+      "business_id": "NGBIZZ0000000000000003",
+      "stars": 4.0,
+      "text": "The pepper soup had depth and enough heat. Seating could be better, abeg, but the broth e sweet die.",
+      "date": "2024-04-04"
+    },
+    {
+      "review_id": "REVNG000000000000000018",
+      "user_id": "user_003_abuja_critic",
+      "business_id": "NGBIZZ0000000000000014",
+      "stars": 4.0,
+      "text": "Glow Naija Shea Butter Kit worked well and packaging looked neat. It is a confirm product, though the jar could be bigger.",
+      "date": "2024-12-15"
+    },
+    {
+      "review_id": "REVNG000000000000000019",
+      "user_id": "user_004_ph_foodlover",
+      "business_id": "NGBIZZ0000000000000005",
+      "stars": 5.0,
+      "text": "Port Harcourt Fisherman's Buka served native soup that e sweet die. Fresh fish, plenty spice, no wahala at all.",
+      "date": "2022-05-09"
+    },
+    {
+      "review_id": "REVNG000000000000000020",
+      "user_id": "user_004_ph_foodlover",
+      "business_id": "NGBIZZ0000000000000003",
+      "stars": 4.0,
+      "text": "Their pepper soup is strong and comforting. My guy, I liked the spice, but the fish portion was smaller than expected.",
+      "date": "2022-12-18"
+    },
+    {
+      "review_id": "REVNG000000000000000021",
+      "user_id": "user_004_ph_foodlover",
+      "business_id": "NGBIZZ0000000000000001",
+      "stars": 5.0,
+      "text": "Mama Titi's Buka has that home taste. Rice, stew, ponmo all confirm, abeg this is real chop life food.",
+      "date": "2023-05-25"
+    },
+    {
+      "review_id": "REVNG000000000000000022",
+      "user_id": "user_004_ph_foodlover",
+      "business_id": "NGBIZZ0000000000000009",
+      "stars": 4.0,
+      "text": "Zobo & Chill Cafe had nice drinks and clean space. I wanted more small chops options, but no dulling, the zobo was good.",
+      "date": "2023-09-14"
+    },
+    {
+      "review_id": "REVNG000000000000000023",
+      "user_id": "user_004_ph_foodlover",
+      "business_id": "NGBIZZ0000000000000012",
+      "stars": 4.0,
+      "text": "Skyline Ikoyi Dining is fine dining with serious flavour. Price is high, no wahala, but the seafood was fresh and clean.",
+      "date": "2024-02-20"
+    },
+    {
+      "review_id": "REVNG000000000000000024",
+      "user_id": "user_004_ph_foodlover",
+      "business_id": "NGBIZZ0000000000000006",
+      "stars": 3.0,
+      "text": "Chicken Rush was fast, but the chicken was not spicy enough for me. Abeg they should add more pepper to make it confirm.",
+      "date": "2024-08-03"
+    },
+    {
+      "review_id": "REVNG000000000000000025",
+      "user_id": "user_005_ibadan_local",
+      "business_id": "NGBIZZ0000000000000008",
+      "stars": 5.0,
+      "text": "Dodo King Ibadan is my quick comfort spot. The plantain e sweet die and the pepper sauce is confirm.",
+      "date": "2022-04-11"
+    },
+    {
+      "review_id": "REVNG000000000000000026",
+      "user_id": "user_005_ibadan_local",
+      "business_id": "NGBIZZ0000000000000010",
+      "stars": 5.0,
+      "text": "The Palmwine Press has correct palmwine and calm evening vibe. My guy, no dulling, the small chops made sense too.",
+      "date": "2022-09-29"
+    },
+    {
+      "review_id": "REVNG000000000000000027",
+      "user_id": "user_005_ibadan_local",
+      "business_id": "NGBIZZ0000000000000001",
+      "stars": 4.0,
+      "text": "Mama Titi's food tastes homemade. Service was busy, abeg, but the amala and stew were worth the wait.",
+      "date": "2023-03-06"
+    },
+    {
+      "review_id": "REVNG000000000000000028",
+      "user_id": "user_005_ibadan_local",
+      "business_id": "NGBIZZ0000000000000015",
+      "stars": 4.0,
+      "text": "Lagos Luxe Ankara Tote is beautiful and practical. Stitching is confirm, no wahala, I use it for market runs.",
+      "date": "2023-11-12"
+    },
+    {
+      "review_id": "REVNG000000000000000029",
+      "user_id": "user_005_ibadan_local",
+      "business_id": "NGBIZZ0000000000000011",
+      "stars": 4.0,
+      "text": "Abuja Green Juice Bar has healthy drinks that taste fresh. I wanted more local fruit options, but e dey hit.",
+      "date": "2024-06-01"
+    },
+    {
+      "review_id": "REVNG000000000000000030",
+      "user_id": "user_005_ibadan_local",
+      "business_id": "NGBIZZ0000000000000013",
+      "stars": 5.0,
+      "text": "The Calabash Room is classy without doing too much. Food came hot, staff were polite, and everything was confirm.",
+      "date": "2024-12-01"
     }
-  ]
+  ],
+  "test_scenarios": {
+    "task_a": [
+      {
+        "description": "Generate a suya-style review for a Lagos foodie who loves bold Nigerian food.",
+        "request_body": {
+          "user_id": "user_001_naija_foodie",
+          "item_id": "NGBIZZ0000000000000003",
+          "persona": {},
+          "language_mode": "naija"
+        },
+        "expected_behaviour": "Response should infer a generous, food-focused persona and produce a warm Naija-style review mentioning pepper soup, spice, and phrases like confirm or no wahala."
+      },
+      {
+        "description": "Generate a review for a Lagos explorer trying an Abuja fine dining spot they have not reviewed.",
+        "request_body": {
+          "user_id": "user_002_lagos_explorer",
+          "item_id": "NGBIZZ0000000000000013",
+          "persona": {},
+          "language_mode": "naija"
+        },
+        "expected_behaviour": "Response should balance premium dining language with casual Nigerian warmth and explain why the user may like polished service and ambience."
+      },
+      {
+        "description": "Generate a fast food review for the more critical Abuja reviewer.",
+        "request_body": {
+          "user_id": "user_003_abuja_critic",
+          "item_id": "NGBIZZ0000000000000006",
+          "persona": {},
+          "language_mode": "standard"
+        },
+        "expected_behaviour": "Response should be professional English, slightly more critical than other users, and mention speed, sauce, freshness, or service quality."
+      },
+      {
+        "description": "Generate a pidgin review for a Port Harcourt seafood lover trying jollof.",
+        "request_body": {
+          "user_id": "user_004_ph_foodlover",
+          "item_id": "NGBIZZ0000000000000004",
+          "persona": {},
+          "language_mode": "pidgin"
+        },
+        "expected_behaviour": "Response should be fully Nigerian Pidgin, mention jollof or smoky rice, and sound like a real street-level Nigerian food review."
+      },
+      {
+        "description": "Generate a review for an Ibadan local trying a Lagos cafe.",
+        "request_body": {
+          "user_id": "user_005_ibadan_local",
+          "item_id": "NGBIZZ0000000000000009",
+          "persona": {},
+          "language_mode": "naija"
+        },
+        "expected_behaviour": "Response should reflect the user's love for local comfort, drinks, and calm vibes while keeping the tone friendly and Nigerian."
+      }
+    ],
+    "task_b": [
+      {
+        "description": "Recommend spicy Nigerian food for a Naija foodie with strong buka and suya history.",
+        "request_body": {
+          "user_id": "user_001_naija_foodie",
+          "query": "spicy suya and local buka food",
+          "top_k": 5,
+          "is_cold_start": false,
+          "language_mode": "naija"
+        },
+        "expected_behaviour": "Should prioritize Nigerian restaurants such as Eko Suya Spot, Mama Titi's Buka, Lagos Pepper Soup Joint, and Abuja Jollof Republic with warm Naija reasons."
+      },
+      {
+        "description": "Recommend Lagos spots for a user who likes cafes, late-night food, and premium experiences.",
+        "request_body": {
+          "user_id": "user_002_lagos_explorer",
+          "query": "Lagos cafe, suya, and fine dining",
+          "top_k": 5,
+          "is_cold_start": false,
+          "language_mode": "naija"
+        },
+        "expected_behaviour": "Should include a blend of Lagos businesses such as Zobo & Chill Cafe, Eko Suya Spot, Skyline Ikoyi Dining, and Chicken Rush Lekki."
+      },
+      {
+        "description": "Cold start recommendation for a brand new user who has no review history.",
+        "request_body": {
+          "user_id": "brand_new_user_001",
+          "query": "jollof rice and pepper soup in Abuja",
+          "top_k": 5,
+          "is_cold_start": true,
+          "language_mode": "naija",
+          "user_responses": {
+            "1": "jollof rice and pepper soup",
+            "2": "sit-down restaurants",
+            "3": "medium budget",
+            "4": "try new things",
+            "5": "Abuja"
+          }
+        },
+        "expected_behaviour": "Should build a temporary starter profile from onboarding responses and recommend Abuja Jollof Republic, The Calabash Room, Abuja Green Juice Bar, or relevant Nigerian food spots."
+      },
+      {
+        "description": "Pidgin mode recommendation for an Ibadan local looking for comfort food.",
+        "request_body": {
+          "user_id": "user_005_ibadan_local",
+          "query": "plantain, palmwine and local chill spot",
+          "top_k": 5,
+          "is_cold_start": false,
+          "language_mode": "pidgin"
+        },
+        "expected_behaviour": "Reasons should be in Nigerian Pidgin and prioritize Dodo King Ibadan, The Palmwine Press, and other comfort-style local options."
+      },
+      {
+        "description": "Cross-domain query that should surface both food businesses and Amazon-style beauty or lifestyle products.",
+        "request_body": {
+          "user_id": "user_003_abuja_critic",
+          "query": "beauty products and good food",
+          "top_k": 5,
+          "is_cold_start": false,
+          "language_mode": "naija"
+        },
+        "expected_behaviour": "Should be able to include Glow Naija Shea Butter Kit or Lagos Luxe Ankara Tote alongside strong restaurant matches like The Calabash Room or Abuja Jollof Republic."
+      }
+    ]
+  }
 }

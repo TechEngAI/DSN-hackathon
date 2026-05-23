@@ -5,6 +5,7 @@ from typing import Any
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
+from app.language_config import get_language_instruction
 from app.startup import app_state
 
 router = APIRouter(tags=["Task A"])
@@ -47,6 +48,7 @@ class GenerateReviewRequest(BaseModel):
     user_id: str  # Unique identifier for the user
     item_id: str  # ID of the business/item to generate review for
     persona: dict[str, Any] = Field(default_factory=dict)  # Optional pre-built persona (if not provided, will be built from history)
+    language_mode: str = Field(default="naija")  # Options: standard | naija | pidgin
 
 
 # Response model for Task A review generation endpoint
@@ -152,7 +154,7 @@ def build_persona(user_history: dict) -> dict:
 
 # Review Generator: Simulates a user review for an unseen item based on persona
 # Returns JSON with rating, review_text, and reasoning
-def generate_review_logic(persona: dict, item: dict) -> dict:
+def generate_review_logic(persona: dict, item: dict, language_instruction: str | None = None) -> dict:
     """
     Generates a review for an item that perfectly aligns with the given persona.
     """
@@ -225,6 +227,8 @@ def generate_review_logic(persona: dict, item: dict) -> dict:
         f"{NIGERIAN_CONTEXT_BLOCK}\n"
         "Strictly output only the raw JSON. Do not include markdown code fences or conversational text."
     )
+    if language_instruction is not None:
+        system_prompt = f"{system_prompt}\n\nLANGUAGE STYLE INSTRUCTION:\n{language_instruction}"
 
     # Step 4: Call LLM to generate review matching persona
     raw_response = app_state["llm"].generate(prompt=prompt, system_prompt=system_prompt)
@@ -253,7 +257,8 @@ def generate_review(request: GenerateReviewRequest) -> GenerateReviewResponse:
 
     # Step 3: Generate review based on persona and item details
     item = {"item_id": request.item_id}
-    result = generate_review_logic(persona, item)
+    lang_instruction = get_language_instruction(request.language_mode)
+    result = generate_review_logic(persona, item, language_instruction=lang_instruction)
 
     # Step 4: Validate rating is within 1-5 range
     rating = float(result.get("rating", 3.0))
