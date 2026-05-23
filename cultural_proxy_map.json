@@ -1,0 +1,118 @@
+{
+  "version": "1.0.0",
+  "description": "Mapping dictionary for localizing global Yelp review keywords and sentiments into Nigerian cultural touchpoints and Pidgin expressions.",
+  "metadata": {
+    "target_regions": ["Lagos", "Abuja", "Port Harcourt", "General Nigeria"],
+    "analysis_source": "2000 Yelp Users Behavioral Study (May 2026)"
+  },
+  "mappings": [
+    {
+      "global_keyword": "pub",
+      "category": "venue_type",
+      "nigerian_cultural_touchpoint": "Beer Parlour / Local Joint",
+      "pidgin_equivalent": "Joint / Parlour",
+      "description": "A casual local spot where people gather after work to drink lager beer, talk politics, and eat side dishes like pepper soup or point-and-kill fish.",
+      "example_global": "We met up at the local pub after work for a few pints.",
+      "example_nigerian_pidgin": "We hook up for one beer parlour after work to chill."
+    },
+    {
+      "global_keyword": "bistro",
+      "category": "venue_type",
+      "nigerian_cultural_touchpoint": "Buka / Mama Put / Eatery",
+      "pidgin_equivalent": "Buka / Mama Put",
+      "description": "A small, informal dining spot serving local staple dishes (e.g., amala, pounded yam, jollof rice) quickly and affordably, often managed by a head cook referred to as 'Mama'.",
+      "example_global": "We stopped by a small corner bistro for a quick lunch.",
+      "example_nigerian_pidgin": "We branch one nice Buka for road side eat beta amala."
+    },
+    {
+      "global_keyword": "spicy",
+      "category": "food_attribute",
+      "nigerian_cultural_touchpoint": "Pepperish / Active Pepper",
+      "pidgin_equivalent": "Get pepper / Pepper go kill person",
+      "description": "Refers to high heat levels from hot peppers (like habanero/atarodo). In Nigerian cuisine, spice is a baseline expectation, and 'spicy' foods are appreciated for their throat-clearing heat.",
+      "example_global": "The sauce was delicious but a bit too spicy for my taste.",
+      "example_nigerian_pidgin": "The soup sweet well-well but the pepper dey active."
+    },
+    {
+      "global_keyword": "cocktail",
+      "category": "drink_type",
+      "nigerian_cultural_touchpoint": "Chapman",
+      "pidgin_equivalent": "Chapman / Mixed drink",
+      "description": "Chapman is Nigeria's signature non-alcoholic/alcoholic cocktail, made with Fanta, Sprite, Angostura bitters, blackcurrant cordial, and cucumber garnish. Essential at any event.",
+      "example_global": "I ordered a fruity summer cocktail at the bar.",
+      "example_nigerian_pidgin": "I tell the steward make he bring cold Chapman for me."
+    },
+    {
+      "global_keyword": "waiter",
+      "category": "service",
+      "nigerian_cultural_touchpoint": "Steward / Server / Attendant",
+      "pidgin_equivalent": "Steward / Boy / Attendant",
+      "description": "Usually addressed formally as 'Steward' or 'Server'. In highly informal settings, users might refer to them as 'attendant'. Address style is crucial for showing respect.",
+      "example_global": "Our waiter was very attentive and prompt.",
+      "example_nigerian_pidgin": "The steward dey try, he dey quick response to our call."
+    },
+    {
+      "global_keyword": "manager",
+      "category": "service",
+      "nigerian_cultural_touchpoint": "Oga / Manager / Oga at the top",
+      "pidgin_equivalent": "Oga / Oga at the top / Madam",
+      "description": "The boss or supervisor. Escalating an issue to the 'Oga' is a standard move when service fails.",
+      "example_global": "We asked to speak to the manager about the bill.",
+      "example_nigerian_pidgin": "We ask to see the Oga because of the money response."
+    },
+    {
+      "global_keyword": "delicious",
+      "category": "sentiment_positive",
+      "nigerian_cultural_touchpoint": "Sweet die / Correct / Beta food",
+      "pidgin_equivalent": "Sweet die / Sweet well-well / Correct",
+      "description": "Expression of extreme food satisfaction. 'Sweet' is the universal pidgin translation for tasty/delicious.",
+      "example_global": "The steak was absolutely delicious and cooked perfectly.",
+      "example_nigerian_pidgin": "The food sweet die, everything correct."
+    },
+    {
+      "global_keyword": "disappointed",
+      "category": "sentiment_negative",
+      "nigerian_cultural_touchpoint": "Vexed / Annoyed / Disappointed",
+      "pidgin_equivalent": "My eye clear / I vex / Money waste",
+      "description": "Expressing deep regret or anger at poor service or food quality, usually leading to a vow never to return.",
+      "example_global": "I was highly disappointed by the cold food and bad service.",
+      "example_nigerian_pidgin": "I vex well-well as they bring cold food, my money waste."
+    },
+    {
+      "global_keyword": "expensive",
+      "category": "price",
+      "nigerian_cultural_touchpoint": "Tear-pocket price / Cut-throat price",
+      "pidgin_equivalent": "Cost die / Tear pocket / Over-billing",
+      "description": "High pricing that feels unjustified, often described as 'over-billing' or 'tearing pocket'.",
+      "example_global": "The entrees were overpriced and not worth the cost.",
+      "example_nigerian_pidgin": "The price of food for there dey tear pocket, e no worth am."
+    },
+    {
+      "global_keyword": "waiting time",
+      "category": "service",
+      "nigerian_cultural_touchpoint": "Long thing / Delay",
+      "pidgin_equivalent": "Long thing / Waste time / Delay",
+      "description": "Frustration with slow service. Nigerians despise waiting long for food unless they are hanging out at a joint.",
+      "example_global": "We had to wait for 45 minutes for our table.",
+      "example_nigerian_pidgin": "We stand for line like 45 minutes, na long thing o."
+    },
+    {
+      "global_keyword": "brunch",
+      "category": "meal_type",
+      "nigerian_cultural_touchpoint": "Late heavy breakfast",
+      "pidgin_equivalent": "Late food / Heavy breakfast",
+      "description": "Concept of eating a heavy meal in the late morning (e.g. Yam and Egg, Akara and Pap, or Noodles) that serves as both breakfast and lunch.",
+      "example_global": "We went out for a nice Sunday brunch.",
+      "example_nigerian_pidgin": "We branch out for late heavy breakfast of yam and egg."
+    },
+    {
+      "global_keyword": "dessert",
+      "category": "food_type",
+      "nigerian_cultural_touchpoint": "Sweet mouth / Small chops",
+      "pidgin_equivalent": "Sweet mouth / Small chops",
+      "description": "Sweet items eaten after a meal, often equated conceptually to 'sweet mouth' (craving something sweet) or associated with puff-puff and small chops at gatherings.",
+      "example_global": "We finished our dinner with a chocolate dessert.",
+      "example_nigerian_pidgin": "After we chop, we use puff-puff take sweet mouth."
+    }
+  ]
+}

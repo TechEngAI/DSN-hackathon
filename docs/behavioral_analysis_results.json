@@ -1,0 +1,750 @@
+{
+  "disappointment": {
+    "avg_chars": 694.198,
+    "avg_words": 133.15,
+    "avg_sentences": 9.407,
+    "excl_per_review": 1.152,
+    "quest_per_review": 0.372,
+    "caps_ratio_percent": 0.6849417949680812,
+    "top_words": [
+      [
+        "she",
+        570
+      ],
+      [
+        "when",
+        515
+      ],
+      [
+        "just",
+        444
+      ],
+      [
+        "all",
+        426
+      ],
+      [
+        "from",
+        405
+      ],
+      [
+        "like",
+        390
+      ],
+      [
+        "even",
+        361
+      ],
+      [
+        "never",
+        349
+      ],
+      [
+        "what",
+        339
+      ],
+      [
+        "after",
+        336
+      ],
+      [
+        "them",
+        329
+      ],
+      [
+        "here",
+        326
+      ],
+      [
+        "will",
+        320
+      ],
+      [
+        "her",
+        320
+      ],
+      [
+        "said",
+        314
+      ],
+      [
+        "very",
+        313
+      ],
+      [
+        "told",
+        307
+      ],
+      [
+        "been",
+        304
+      ],
+      [
+        "because",
+        302
+      ],
+      [
+        "don",
+        294
+      ],
+      [
+        "their",
+        292
+      ],
+      [
+        "minutes",
+        287
+      ],
+      [
+        "did",
+        277
+      ],
+      [
+        "only",
+        275
+      ],
+      [
+        "asked",
+        269
+      ],
+      [
+        "came",
+        268
+      ],
+      [
+        "can",
+        264
+      ],
+      [
+        "your",
+        257
+      ],
+      [
+        "then",
+        257
+      ],
+      [
+        "didn",
+        252
+      ],
+      [
+        "could",
+        252
+      ],
+      [
+        "over",
+        251
+      ],
+      [
+        "which",
+        244
+      ],
+      [
+        "again",
+        227
+      ],
+      [
+        "went",
+        223
+      ],
+      [
+        "other",
+        210
+      ],
+      [
+        "restaurant",
+        206
+      ],
+      [
+        "first",
+        196
+      ],
+      [
+        "know",
+        195
+      ],
+      [
+        "more",
+        193
+      ],
+      [
+        "how",
+        190
+      ],
+      [
+        "off",
+        188
+      ],
+      [
+        "who",
+        188
+      ],
+      [
+        "people",
+        187
+      ],
+      [
+        "before",
+        181
+      ],
+      [
+        "some",
+        176
+      ],
+      [
+        "experience",
+        174
+      ],
+      [
+        "table",
+        173
+      ],
+      [
+        "really",
+        169
+      ],
+      [
+        "took",
+        169
+      ]
+    ],
+    "top_bigrams": [
+      [
+        "it was",
+        388
+      ],
+      [
+        "of the",
+        375
+      ],
+      [
+        "in the",
+        355
+      ],
+      [
+        "i was",
+        352
+      ],
+      [
+        "and i",
+        316
+      ],
+      [
+        "don t",
+        293
+      ],
+      [
+        "on the",
+        286
+      ],
+      [
+        "to the",
+        279
+      ],
+      [
+        "this place",
+        269
+      ],
+      [
+        "didn t",
+        252
+      ],
+      [
+        "and the",
+        247
+      ],
+      [
+        "for a",
+        218
+      ],
+      [
+        "for the",
+        214
+      ],
+      [
+        "i had",
+        214
+      ],
+      [
+        "we were",
+        210
+      ],
+      [
+        "to be",
+        208
+      ],
+      [
+        "at the",
+        206
+      ],
+      [
+        "it s",
+        201
+      ],
+      [
+        "i have",
+        196
+      ],
+      [
+        "the food",
+        182
+      ]
+    ],
+    "top_trigrams": [
+      [
+        "i don t",
+        86
+      ],
+      [
+        "i had to",
+        66
+      ],
+      [
+        "one of the",
+        58
+      ],
+      [
+        "the food was",
+        57
+      ],
+      [
+        "i didn t",
+        55
+      ],
+      [
+        "this place is",
+        49
+      ],
+      [
+        "didn t even",
+        48
+      ],
+      [
+        "won t be",
+        46
+      ],
+      [
+        "it was a",
+        43
+      ],
+      [
+        "they don t",
+        43
+      ],
+      [
+        "i will never",
+        39
+      ],
+      [
+        "it would be",
+        39
+      ],
+      [
+        "i was told",
+        38
+      ],
+      [
+        "they didn t",
+        38
+      ],
+      [
+        "and it was",
+        37
+      ],
+      [
+        "i went to",
+        35
+      ],
+      [
+        "it wasn t",
+        35
+      ],
+      [
+        "i ve ever",
+        34
+      ],
+      [
+        "out of the",
+        32
+      ],
+      [
+        "will not be",
+        32
+      ]
+    ]
+  },
+  "satisfaction": {
+    "avg_chars": 465.468,
+    "avg_words": 86.911,
+    "avg_sentences": 7.082,
+    "excl_per_review": 1.763,
+    "quest_per_review": 0.082,
+    "caps_ratio_percent": 0.4487349127268125,
+    "top_words": [
+      [
+        "great",
+        588
+      ],
+      [
+        "very",
+        393
+      ],
+      [
+        "all",
+        337
+      ],
+      [
+        "here",
+        297
+      ],
+      [
+        "can",
+        283
+      ],
+      [
+        "just",
+        276
+      ],
+      [
+        "best",
+        266
+      ],
+      [
+        "from",
+        264
+      ],
+      [
+        "their",
+        250
+      ],
+      [
+        "will",
+        246
+      ],
+      [
+        "like",
+        224
+      ],
+      [
+        "also",
+        215
+      ],
+      [
+        "love",
+        214
+      ],
+      [
+        "amazing",
+        200
+      ],
+      [
+        "delicious",
+        193
+      ],
+      [
+        "really",
+        188
+      ],
+      [
+        "which",
+        184
+      ],
+      [
+        "staff",
+        184
+      ],
+      [
+        "always",
+        180
+      ],
+      [
+        "friendly",
+        180
+      ],
+      [
+        "when",
+        178
+      ],
+      [
+        "she",
+        177
+      ],
+      [
+        "some",
+        176
+      ],
+      [
+        "what",
+        174
+      ],
+      [
+        "nice",
+        172
+      ],
+      [
+        "well",
+        167
+      ],
+      [
+        "has",
+        165
+      ],
+      [
+        "been",
+        164
+      ],
+      [
+        "definitely",
+        159
+      ],
+      [
+        "your",
+        158
+      ],
+      [
+        "more",
+        151
+      ],
+      [
+        "even",
+        145
+      ],
+      [
+        "too",
+        141
+      ],
+      [
+        "new",
+        139
+      ],
+      [
+        "recommend",
+        139
+      ],
+      [
+        "made",
+        138
+      ],
+      [
+        "experience",
+        131
+      ],
+      [
+        "try",
+        127
+      ],
+      [
+        "them",
+        126
+      ],
+      [
+        "only",
+        126
+      ],
+      [
+        "other",
+        124
+      ],
+      [
+        "first",
+        119
+      ],
+      [
+        "everything",
+        117
+      ],
+      [
+        "chicken",
+        115
+      ],
+      [
+        "did",
+        114
+      ],
+      [
+        "fresh",
+        114
+      ],
+      [
+        "don",
+        113
+      ],
+      [
+        "awesome",
+        113
+      ],
+      [
+        "because",
+        112
+      ],
+      [
+        "after",
+        109
+      ]
+    ],
+    "top_bigrams": [
+      [
+        "and the",
+        278
+      ],
+      [
+        "of the",
+        268
+      ],
+      [
+        "this place",
+        248
+      ],
+      [
+        "and i",
+        228
+      ],
+      [
+        "in the",
+        223
+      ],
+      [
+        "it was",
+        223
+      ],
+      [
+        "it s",
+        218
+      ],
+      [
+        "the best",
+        192
+      ],
+      [
+        "on the",
+        172
+      ],
+      [
+        "i was",
+        162
+      ],
+      [
+        "for a",
+        159
+      ],
+      [
+        "i ve",
+        151
+      ],
+      [
+        "is a",
+        150
+      ],
+      [
+        "if you",
+        150
+      ],
+      [
+        "to the",
+        149
+      ],
+      [
+        "a great",
+        141
+      ],
+      [
+        "i have",
+        138
+      ],
+      [
+        "i m",
+        138
+      ],
+      [
+        "the food",
+        134
+      ],
+      [
+        "i had",
+        130
+      ]
+    ],
+    "top_trigrams": [
+      [
+        "this place is",
+        56
+      ],
+      [
+        "one of the",
+        48
+      ],
+      [
+        "i can t",
+        47
+      ],
+      [
+        "and it was",
+        41
+      ],
+      [
+        "it s a",
+        40
+      ],
+      [
+        "i don t",
+        39
+      ],
+      [
+        "this is the",
+        39
+      ],
+      [
+        "the food was",
+        37
+      ],
+      [
+        "i had the",
+        35
+      ],
+      [
+        "i ve been",
+        35
+      ],
+      [
+        "i ve ever",
+        34
+      ],
+      [
+        "i didn t",
+        34
+      ],
+      [
+        "if you re",
+        33
+      ],
+      [
+        "of the best",
+        33
+      ],
+      [
+        "the food is",
+        32
+      ],
+      [
+        "i highly recommend",
+        31
+      ],
+      [
+        "if you are",
+        31
+      ],
+      [
+        "it was a",
+        30
+      ],
+      [
+        "is the best",
+        30
+      ],
+      [
+        "ve ever had",
+        28
+      ]
+    ]
+  }
+}
