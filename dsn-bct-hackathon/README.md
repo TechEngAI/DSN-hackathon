@@ -53,9 +53,7 @@ The FastAPI endpoints will be live at `http://localhost:8080`. Interactive docum
 
 The application expects a `.env` file in the root directory:
 
-```env
-GEMINI_API_KEY=AIzaSyAYj9Oa7K5CFp3lYukYBsDaCgqnXC_jf6s
-```
+
 
 ---
 
