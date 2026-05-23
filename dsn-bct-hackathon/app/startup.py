@@ -16,6 +16,19 @@ from app.user_history import UserHistory
 app_state = {}
 
 
+def find_first_existing_file(candidates: list[tuple[str, int]]) -> tuple[str, int] | None:
+    project_root = Path(__file__).resolve().parent.parent
+
+    for filepath, limit in candidates:
+        path = Path(filepath)
+        if not path.is_absolute():
+            path = project_root / filepath
+        if path.exists():
+            return filepath, limit
+
+    return None
+
+
 def log_chromadb_mode(client, collection):
     """
     Log ChromaDB connection mode and validate it is working.
@@ -140,26 +153,50 @@ async def startup_event() -> None:
 
     try:
         project_root = Path(__file__).resolve().parent.parent
-        business_path = project_root / "data" / "yelp_academic_dataset_business.json"
-        review_path = project_root / "data" / "yelp_academic_dataset_review.json"
         sample_path = project_root / "data" / "sample_data.json"
-        amazon_metadata_path = project_root / "data" / "amazon_metadata.jsonl"
-        amazon_reviews_path = project_root / "data" / "amazon_reviews.jsonl"
 
         app_state["llm"] = LLMClient()
         app_state["vector_store"] = VectorStore()
         app_state["data_loader"] = YelpDataLoader()
 
-        if not business_path.exists() or not review_path.exists():
-            print("Full Yelp dataset files missing, loading data/sample_data.json")
-            businesses, reviews = app_state["data_loader"].load_sample_data(str(sample_path))
-        else:
-            businesses = app_state["data_loader"].load_businesses(str(business_path), limit=5000)
-            reviews = app_state["data_loader"].load_reviews(str(review_path), limit=50000)
+        business_file = find_first_existing_file(
+            [
+                ("data/yelp_academic_dataset_business.json", 5000),
+                ("data/yelp_sample_businesses.json", 500),
+                ("data/sample_data.json", 0),
+            ]
+        )
+        review_file = find_first_existing_file(
+            [
+                ("data/yelp_academic_dataset_review.json", 50000),
+                ("data/yelp_reviews_20mb.json", 5000),
+                ("data/yelp_reviews_15mb.json", 3000),
+                ("data/yelp_sample_reviews.json", 500),
+            ]
+        )
 
-            if not businesses and not reviews:
-                print("Full Yelp dataset empty, loading data/sample_data.json")
-                businesses, reviews = app_state["data_loader"].load_sample_data(str(sample_path))
+        if business_file is None:
+            businesses = []
+        elif business_file[0] == "data/sample_data.json":
+            print(f"Loading businesses from: {business_file[0]}")
+            businesses, _ = app_state["data_loader"].load_sample_data(str(sample_path))
+        else:
+            business_path = project_root / business_file[0]
+            print(f"Loading businesses from: {business_file[0]}")
+            businesses = app_state["data_loader"].load_businesses(
+                str(business_path),
+                limit=business_file[1],
+            )
+
+        if review_file is None:
+            reviews = []
+        else:
+            review_path = project_root / review_file[0]
+            print(f"Loading reviews from: {review_file[0]}")
+            reviews = app_state["data_loader"].load_reviews(
+                str(review_path),
+                limit=review_file[1],
+            )
 
         app_state["businesses"] = businesses
         app_state["reviews"] = reviews
@@ -181,20 +218,44 @@ async def startup_event() -> None:
         app_state["amazon_indexer"] = AmazonIndexer(vector_store=app_state["vector_store"])
         app_state["amazon_reviews"] = []
         app_state["amazon_products"] = []
-
-        if amazon_reviews_path.exists():
-            app_state["amazon_reviews"] = app_state["amazon_data_loader"].load_reviews(
-                str(amazon_reviews_path),
-                limit=10000,
-            )
-        else:
-            print(f"Amazon reviews file not found, skipping: {amazon_reviews_path}")
-
-        amazon_product_count = load_amazon_products(
-            amazon_metadata_path=amazon_metadata_path,
-            data_loader=app_state["amazon_data_loader"],
-            indexer=app_state["amazon_indexer"],
+        amazon_metadata_file = find_first_existing_file(
+            [
+                ("data/amazon_metadata.jsonl", 2000),
+                ("data/amazon_500_products.json", 500),
+            ]
         )
+        amazon_reviews_file = find_first_existing_file(
+            [
+                ("data/amazon_reviews.jsonl", 10000),
+                ("data/amazon_1000_reviews.json", 1000),
+            ]
+        )
+
+        if amazon_metadata_file is None and amazon_reviews_file is None:
+            print("Amazon dataset not available, skipping")
+        else:
+            if amazon_metadata_file is not None:
+                amazon_metadata_path = project_root / amazon_metadata_file[0]
+                print(f"Loading Amazon products from: {amazon_metadata_file[0]}")
+                amazon_product_count = load_amazon_products(
+                    amazon_metadata_path=amazon_metadata_path,
+                    data_loader=app_state["amazon_data_loader"],
+                    indexer=app_state["amazon_indexer"],
+                )
+                if not app_state["amazon_products"]:
+                    app_state["amazon_products"] = app_state["amazon_data_loader"].load_metadata(
+                        str(amazon_metadata_path),
+                        limit=amazon_metadata_file[1],
+                    )
+                amazon_product_count = amazon_product_count or len(app_state["amazon_products"])
+
+            if amazon_reviews_file is not None:
+                amazon_reviews_path = project_root / amazon_reviews_file[0]
+                print(f"Loading Amazon reviews from: {amazon_reviews_file[0]}")
+                app_state["amazon_reviews"] = app_state["amazon_data_loader"].load_reviews(
+                    str(amazon_reviews_path),
+                    limit=amazon_reviews_file[1],
+                )
 
         app_state["cold_start_handler"] = ColdStartHandler(
             vector_store=app_state["vector_store"],
@@ -233,10 +294,6 @@ async def startup_event() -> None:
     except Exception as exc:
         print(f"Startup error: {exc}")
     finally:
-        if not amazon_product_count:
-            amazon_product_count = app_state.get("amazon_indexer").get_amazon_indexed_count() if app_state.get("amazon_indexer") else 0
-        if not amazon_product_count:
-            amazon_product_count = len(app_state.get("amazon_products", []))
         print(
             "Startup complete - "
             f"{business_count} businesses loaded, "
