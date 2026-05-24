@@ -494,6 +494,11 @@ Example response:
 | Amazon All Beauty | Beauty/lifestyle product metadata indexed into the same recommendation space. | `2000` products |
 | Included Nigerian sample data | Immediate judge testing without large downloads. | `15` businesses/products, `30` reviews, `10` scenarios |
 
+
+## 🚀 Live Demo
+**API Docs:** https://dsn-hackathon-production.up.railway.app/docs
+**Health Check:** https://dsn-hackathon-production.up.railway.app/health
+
 The app automatically loads full Yelp files when they exist:
 
 ```text
@@ -648,8 +653,10 @@ dsn-bct-hackathon/
 
 ## License
 
-MIT License
+Copyright (c) 2026 NaijaSense AI Team — Abdulhammed Muh-Awwal, Olanrewaju Muiz, JahsFavour Omoluabi
 
-Copyright (c) 2026 NaijaSense AI Team
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files, to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
