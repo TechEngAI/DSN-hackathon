@@ -497,6 +497,7 @@ Example response:
 
 ## 🚀 Live Demo
 **API Docs:** https://dsn-hackathon-production.up.railway.app/docs
+
 **Health Check:** https://dsn-hackathon-production.up.railway.app/health
 
 The app automatically loads full Yelp files when they exist:
