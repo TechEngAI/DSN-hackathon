@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NaijaSense | AI Recommendations with Nigerian Soul</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-950: #071f17;
+      --green-900: #0d2f23;
+      --green-800: #123c2d;
+      --green-700: #1B4332;
+      --green-600: #245a43;
+      --gold: #F4A261;
+      --gold-strong: #ffb15f;
+      --cream: #fff8ec;
+      --mint: #9be2bd;
+      --red: #ff7676;
+      --blue: #72b7ff;
+      --purple: #c8a2ff;
+      --line: rgba(255, 248, 236, 0.14);
+      --text: #fff8ec;
+      --muted: rgba(255, 248, 236, 0.72);
+      --shadow: 0 22px 70px rgba(0, 0, 0, 0.32);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(244, 162, 97, 0.15), transparent 30rem),
+        linear-gradient(135deg, var(--green-950), var(--green-700));
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding-bottom: 48px;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      margin: 0 -16px;
+      padding: 16px;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 31, 23, 0.84);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px 24px;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      color: var(--green-950);
+      font-weight: 800;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, var(--gold), #ffd08a);
+      box-shadow: 0 10px 28px rgba(244, 162, 97, 0.28);
+    }
+
+    .brand-name {
+      margin: 0;
+      font-size: clamp(1.35rem, 3vw, 1.9rem);
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .tagline {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+      white-space: normal;
+    }
+
+    .tabs {
+      justify-self: end;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px 13px;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease;
+    }
+
+    .tab-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(244, 162, 97, 0.68);
+    }
+
+    .tab-btn.active {
+      color: var(--green-950);
+      background: var(--gold);
+      border-color: var(--gold);
+      font-weight: 700;
+    }
+
+    main {
+      padding-top: 34px;
+    }
+
+    .tab-panel {
+      display: none;
+      animation: panelIn 360ms ease both;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes panelIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero {
+      min-height: 390px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(290px, 0.85fr);
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .panel,
+    .feature-card,
+    .result-card,
+    .rec-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      padding: clamp(24px, 5vw, 48px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 56%;
+      height: 8px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--mint));
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      margin: 0 0 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      font-size: 0.82rem;
+    }
+
+    h1,
+    h2,
+    h3 {
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 7vw, 4.8rem);
+      line-height: 1.02;
+      max-width: 12ch;
+    }
+
+    .lead {
+      margin: 20px 0 0;
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.13rem);
+      line-height: 1.8;
+    }
+
+    .status-strip {
+      margin-top: 26px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .status-pill,
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      border-radius: var(--radius);
+      padding: 6px 10px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--line);
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #aab5ad;
+      box-shadow: 0 0 0 4px rgba(170, 181, 173, 0.12);
+      flex: 0 0 auto;
+    }
+
+    .dot.live {
+      background: #55e691;
+      box-shadow: 0 0 0 4px rgba(85, 230, 145, 0.14);
+    }
+
+    .dot.down {
+      background: var(--red);
+      box-shadow: 0 0 0 4px rgba(255, 118, 118, 0.14);
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 14px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .feature-card {
+      padding: 20px;
+      min-height: 180px;
+      transition: transform 200ms ease, border-color 200ms ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(244, 162, 97, 0.62);
+    }
+
+    .feature-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      color: var(--green-950);
+      background: var(--gold);
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .feature-card h3,
+    .panel h2,
+    .panel h3 {
+      margin: 0;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 12px 0 0;
+    }
+
+    .panel {
+      padding: clamp(20px, 3vw, 30px);
+    }
+
+    .panel + .panel {
+      margin-top: 18px;
+    }
+
+    .panel-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .panel-subtitle {
+      color: var(--muted);
+      margin: 8px 0 0;
+      line-height: 1.65;
+    }
+
+    .mode-selector,
+    .domain-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .mode-btn,
+    .domain-btn,
+    .copy-btn {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 10px 12px;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .mode-btn:hover,
+    .domain-btn:hover,
+    .copy-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(244, 162, 97, 0.65);
+    }
+
+    .mode-btn.active,
+    .domain-btn.active {
+      color: var(--green-950);
+      background: var(--gold);
+      border-color: var(--gold);
+      font-weight: 700;
+    }
+
+    .example-card {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(244, 162, 97, 0.38);
+      background: rgba(244, 162, 97, 0.1);
+    }
+
+    .quote {
+      margin: 0;
+      color: var(--cream);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .form-grid.single {
+      grid-template-columns: 1fr;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      color: var(--cream);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 13px 14px;
+      outline: none;
+      transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(255, 248, 236, 0.45);
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 4px rgba(244, 162, 97, 0.13);
+    }
+
+    .control-group {
+      display: grid;
+      gap: 10px;
+    }
+
+    .actions {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .gold-btn {
+      border: 0;
+      border-radius: var(--radius);
+      min-height: 48px;
+      padding: 12px 18px;
+      color: var(--green-950);
+      background: linear-gradient(135deg, var(--gold), #ffd08a);
+      font-weight: 800;
+      box-shadow: 0 14px 34px rgba(244, 162, 97, 0.24);
+      transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+    }
+
+    .gold-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(244, 162, 97, 0.32);
+      filter: saturate(1.08);
+    }
+
+    .gold-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.62;
+      transform: none;
+    }
+
+    .range-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    input[type="range"] {
+      accent-color: var(--gold);
+      width: 100%;
+    }
+
+    .range-value {
+      min-width: 44px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 8px 10px;
+      font-weight: 800;
+      color: var(--gold);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .loading {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .loading.active {
+      display: inline-flex;
+    }
+
+    .spinner {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 248, 236, 0.22);
+      border-top-color: var(--gold);
+      animation: spin 800ms linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .error-box,
+    .summary-box,
+    .persona-box {
+      display: none;
+      margin-top: 18px;
+      border-radius: var(--radius);
+      padding: 16px;
+      line-height: 1.65;
+    }
+
+    .error-box {
+      border: 1px solid rgba(255, 118, 118, 0.42);
+      background: rgba(255, 118, 118, 0.1);
+      color: #ffd1d1;
+    }
+
+    .summary-box,
+    .persona-box {
+      border: 1px solid rgba(155, 226, 189, 0.34);
+      background: rgba(155, 226, 189, 0.09);
+      color: var(--cream);
+    }
+
+    .error-box.active,
+    .summary-box.active,
+    .persona-box.active {
+      display: block;
+    }
+
+    .result-card,
+    .results-list {
+      margin-top: 18px;
+    }
+
+    .result-card {
+      display: none;
+      padding: 20px;
+    }
+
+    .result-card.active {
+      display: block;
+      animation: panelIn 320ms ease both;
+    }
+
+    .result-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .stars {
+      color: var(--gold);
+      font-size: 1.35rem;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .review-text {
+      border-left: 4px solid var(--gold);
+      padding: 14px 16px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--cream);
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    .copy-btn {
+      margin-top: 14px;
+    }
+
+    .results-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .rec-card {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      animation: panelIn 320ms ease both;
+    }
+
+    .rec-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .rec-title {
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.35;
+    }
+
+    .rec-reason {
+      margin: 0;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.7;
+      border-left: 3px solid rgba(244, 162, 97, 0.8);
+      padding-left: 12px;
+    }
+
+    .badge.yelp {
+      background: rgba(255, 118, 118, 0.14);
+      border-color: rgba(255, 118, 118, 0.34);
+    }
+
+    .badge.amazon {
+      background: rgba(114, 183, 255, 0.13);
+      border-color: rgba(114, 183, 255, 0.36);
+    }
+
+    .badge.naija {
+      color: var(--green-950);
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .progress {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--gold), var(--mint));
+      transition: width 700ms ease;
+    }
+
+    .score-label {
+      color: var(--gold);
+      font-weight: 800;
+      min-width: 58px;
+      text-align: right;
+    }
+
+    .cold-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .question-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .question-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 16px;
+    }
+
+    .question-card p {
+      margin: 0 0 12px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .option-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .option-item input {
+      margin-top: 4px;
+      accent-color: var(--gold);
+      flex: 0 0 auto;
+    }
+
+    .empty-state {
+      color: var(--muted);
+      border: 1px dashed rgba(255, 248, 236, 0.26);
+      border-radius: var(--radius);
+      padding: 18px;
+      line-height: 1.65;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .footer-note {
+      margin: 28px 0 0;
+      color: rgba(255, 248, 236, 0.58);
+      font-size: 0.86rem;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .header-inner,
+      .hero,
+      .cold-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .tabs {
+        justify-self: start;
+      }
+
+      .feature-grid,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .app-shell {
+        width: min(100% - 20px, 1180px);
+      }
+
+      .site-header {
+        margin: 0 -10px;
+        padding: 12px 10px;
+      }
+
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+      }
+
+      .tab-btn,
+      .mode-btn,
+      .domain-btn {
+        padding: 9px 10px;
+        font-size: 0.88rem;
+      }
+
+      .tabs {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .tab-btn {
+        width: 100%;
+      }
+
+      .panel-title-row,
+      .rec-header,
+      .score-row {
+        align-items: stretch;
+        flex-direction: column;
+        grid-template-columns: 1fr;
+      }
+
+      .score-label {
+        text-align: left;
+      }
+
+      h1 {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="brand" aria-label="NaijaSense">
+          <div class="brand-mark">NS</div>
+          <div>
+            <p class="brand-name">NaijaSense</p>
+            <p class="tagline">AI-Powered Recommendations with Nigerian Soul</p>
+          </div>
+        </div>
+        <nav class="tabs" aria-label="Primary navigation">
+          <button class="tab-btn active" type="button" data-tab="home">Home</button>
+          <button class="tab-btn" type="button" data-tab="review">Generate Review</button>
+          <button class="tab-btn" type="button" data-tab="recommendations">Recommendations</button>
+          <button class="tab-btn" type="button" data-tab="cold">Cold Start</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="tab-panel active" aria-labelledby="home-title">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Premium Nigerian recommendation intelligence</p>
+            <h1 id="home-title">No Dulling — Personalized Recommendations with Naija Vibes</h1>
+            <p class="lead">NaijaSense blends review generation, semantic matching, and local context into one crisp AI experience built for Nigerian taste, language, and energy.</p>
+            <div class="status-strip">
+              <span class="status-pill" id="apiStatus">
+                <span class="dot" id="apiDot"></span>
+                <span id="apiStatusText">Checking API...</span>
+              </span>
+              <span class="badge naija">Built for foodies, shoppers, and explorers</span>
+            </div>
+          </div>
+
+          <div class="hero-side">
+            <div class="panel">
+              <div class="panel-title-row">
+                <div>
+                  <h2>Language Mode</h2>
+                  <p class="panel-subtitle">Switch the voice and see the recommendation style update instantly.</p>
+                </div>
+              </div>
+              <div class="mode-selector" data-mode-group="home">
+                <button class="mode-btn active" type="button" data-mode="standard">Standard</button>
+                <button class="mode-btn" type="button" data-mode="naija">Naija</button>
+                <button class="mode-btn" type="button" data-mode="pidgin">Pidgin</button>
+              </div>
+              <div class="example-card">
+                <p class="quote" id="languageExample">This restaurant has excellent food and great service.</p>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h2>Live API</h2>
+              <p class="panel-subtitle">Health check runs on page load against the Railway backend.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-grid" aria-label="NaijaSense features">
+          <article class="feature-card">
+            <div class="feature-icon">A</div>
+            <h3>Task A — Review Generator</h3>
+            <p>Generate natural, context-aware reviews for a user and business, with rating, tone, and local flavor ready for demos.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">B</div>
+            <h3>Task B — Smart Recommendations</h3>
+            <p>Find relevant restaurants, products, and experiences using query intent, user history, similarity scoring, and domain awareness.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">NG</div>
+            <h3>Nigerian Context Layer</h3>
+            <p>Translate insight into Standard, Naija, or Pidgin expression so results feel warm, confident, and locally grounded.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="review" class="tab-panel" aria-labelledby="review-title">
+        <div class="panel">
+          <div class="panel-title-row">
+            <div>
+              <h2 id="review-title">Task A — Generate Review</h2>
+              <p class="panel-subtitle">Create a review from a user, business, and language style.</p>
+            </div>
+          </div>
+
+          <form id="reviewForm">
+            <div class="form-grid">
+              <div class="field">
+                <label for="reviewUserId">User ID</label>
+                <input id="reviewUserId" type="text" value="user_001_naija_foodie" placeholder="e.g. user_001_naija_foodie" autocomplete="off" required>
+              </div>
+              <div class="field">
+                <label for="reviewBusinessId">Business ID</label>
+                <input id="reviewBusinessId" type="text" value="ABxoFuzZy5mqQ8C5FJJajQ" placeholder="e.g. ABxoFuzZy5mqQ8C5FJJajQ" autocomplete="off" required>
+              </div>
+            </div>
+
+            <div class="control-group" style="margin-top: 16px;">
+              <label>Language Mode</label>
+              <div class="mode-selector" data-mode-group="review">
+                <button class="mode-btn" type="button" data-mode="standard">Standard</button>
+                <button class="mode-btn active" type="button" data-mode="naija">Naija</button>
+                <button class="mode-btn" type="button" data-mode="pidgin">Pidgin</button>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="gold-btn" type="submit" id="reviewSubmit">Generate Review</button>
+              <span class="loading" id="reviewLoading"><span class="spinner"></span>Generating your review...</span>
+            </div>
+          </form>
+
+          <div class="error-box" id="reviewError"></div>
+
+          <article class="result-card" id="reviewResult">
+            <div class="result-top">
+              <div class="stars" id="reviewStars" aria-label="Star rating">★★★★★</div>
+              <span class="badge naija" id="reviewModeBadge">Naija</span>
+            </div>
+            <div class="review-text" id="reviewText"></div>
+            <button class="copy-btn" type="button" id="copyReview">Copy Review</button>
+          </article>
+        </div>
+      </section>
+
+      <section id="recommendations" class="tab-panel" aria-labelledby="rec-title">
+        <div class="panel">
+          <div class="panel-title-row">
+            <div>
+              <h2 id="rec-title">Task B — Recommendations</h2>
+              <p class="panel-subtitle">Ask for what you want and get ranked suggestions with explainable reasoning.</p>
+            </div>
+          </div>
+
+          <form id="recommendForm">
+            <div class="form-grid">
+              <div class="field">
+                <label for="recUserId">User ID</label>
+                <input id="recUserId" type="text" value="user_001_naija_foodie" placeholder="e.g. user_001_naija_foodie" autocomplete="off" required>
+              </div>
+              <div class="field">
+                <label for="recQuery">Search Query</label>
+                <input id="recQuery" type="text" value="spicy food restaurant Lagos" placeholder="e.g. spicy food restaurant Lagos" autocomplete="off" required>
+              </div>
+            </div>
+
+            <div class="form-grid" style="margin-top: 16px;">
+              <div class="field">
+                <label for="topK">Number of Results</label>
+                <div class="range-row">
+                  <input id="topK" type="range" min="1" max="10" value="5">
+                  <span class="range-value" id="topKValue">5</span>
+                </div>
+              </div>
+              <div class="control-group">
+                <label>Language Mode</label>
+                <div class="mode-selector" data-mode-group="recommend">
+                  <button class="mode-btn" type="button" data-mode="standard">Standard</button>
+                  <button class="mode-btn active" type="button" data-mode="naija">Naija</button>
+                  <button class="mode-btn" type="button" data-mode="pidgin">Pidgin</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="control-group" style="margin-top: 16px;">
+              <label>Domain Filter</label>
+              <div class="domain-selector" id="domainFilter">
+                <button class="domain-btn active" type="button" data-domain="all">All</button>
+                <button class="domain-btn" type="button" data-domain="yelp">Yelp Only</button>
+                <button class="domain-btn" type="button" data-domain="amazon">Amazon Only</button>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="gold-btn" type="submit" id="recSubmit">Get Recommendations</button>
+              <span class="loading" id="recLoading"><span class="spinner"></span>Finding your best matches...</span>
+            </div>
+          </form>
+
+          <div class="error-box" id="recError"></div>
+          <div class="results-list" id="recResults"></div>
+          <div class="summary-box" id="recSummary"></div>
+        </div>
+      </section>
+
+      <section id="cold" class="tab-panel" aria-labelledby="cold-title">
+        <div class="cold-layout">
+          <div class="panel">
+            <h2 id="cold-title">Cold Start</h2>
+            <p class="panel-subtitle">New user? No history? No problem. Answer 5 questions and we build your taste profile.</p>
+            <div class="actions">
+              <button class="gold-btn" type="button" id="loadQuestions">Load Questions</button>
+              <span class="loading" id="questionsLoading"><span class="spinner"></span>Loading onboarding...</span>
+            </div>
+            <div class="error-box" id="questionsError"></div>
+          </div>
+
+          <div class="panel">
+            <form id="coldForm">
+              <div class="question-list" id="questionList">
+                <div class="empty-state">Onboarding questions will appear here. Tap Load Questions to fetch them from the API.</div>
+              </div>
+              <div class="actions">
+                <button class="gold-btn" type="submit" id="coldSubmit" disabled>Build My Profile & Recommend</button>
+                <span class="loading" id="coldLoading"><span class="spinner"></span>Building your taste profile...</span>
+              </div>
+            </form>
+            <div class="error-box" id="coldError"></div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top: 18px;">
+          <h2>Your Starter Persona</h2>
+          <div class="persona-box active" id="personaBox">Answer the onboarding questions and NaijaSense will infer your first taste profile here.</div>
+          <div class="results-list" id="coldResults"></div>
+        </div>
+      </section>
+    </main>
+
+    <p class="footer-note">NaijaSense connects to https://dsn-hackathon-production.up.railway.app and handles network or CORS errors with friendly feedback.</p>
+  </div>
+
+  <script>
+    const API_BASE = "https://dsn-hackathon-production.up.railway.app";
+
+    const state = {
+      modes: {
+        home: "standard",
+        review: "naija",
+        recommend: "naija"
+      },
+      domain: "all",
+      onboardingQuestions: [],
+      recommendations: [],
+      coldRecommendations: []
+    };
+
+    const examples = {
+      standard: "This restaurant has excellent food and great service.",
+      naija: "This place na confirm — e sweet die, no dulling my guy!",
+      pidgin: "Oshey! E dey hit well well, abeg no miss am my padi!"
+    };
+
+    const fallbackQuestions = [
+      {
+        id: "cuisine_preference",
+        question: "What kind of food or product style do you usually enjoy?",
+        options: ["Spicy Nigerian meals", "Premium international picks", "Budget-friendly everyday options", "Healthy and light choices"]
+      },
+      {
+        id: "budget",
+        question: "What budget level should NaijaSense prioritize?",
+        options: ["Affordable", "Mid-range", "Premium", "No strong preference"]
+      },
+      {
+        id: "vibe",
+        question: "What vibe are you usually looking for?",
+        options: ["Relaxed and reliable", "Trendy and energetic", "Family-friendly", "Hidden gems"]
+      },
+      {
+        id: "location",
+        question: "Which city or area should recommendations lean toward?",
+        type: "text",
+        placeholder: "e.g. Lagos, Abuja, Port Harcourt"
+      },
+      {
+        id: "must_have",
+        question: "Name one must-have detail for your recommendation.",
+        type: "text",
+        placeholder: "e.g. very spicy, fast delivery, quiet ambience"
+      }
+    ];
+
+    function qs(selector, root = document) {
+      return root.querySelector(selector);
+    }
+
+    function qsa(selector, root = document) {
+      return [...root.querySelectorAll(selector)];
+    }
+
+    function setActiveTab(tabId) {
+      qsa(".tab-btn").forEach(button => button.classList.toggle("active", button.dataset.tab === tabId));
+      qsa(".tab-panel").forEach(panel => panel.classList.toggle("active", panel.id === tabId));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function setMode(group, mode) {
+      state.modes[group] = mode;
+      qsa(`[data-mode-group="${group}"] .mode-btn`).forEach(button => {
+        button.classList.toggle("active", button.dataset.mode === mode);
+      });
+      if (group === "home") {
+        qs("#languageExample").textContent = examples[mode];
+      }
+    }
+
+    function setLoading(id, isLoading) {
+      qs(`#${id}`).classList.toggle("active", isLoading);
+    }
+
+    function setError(id, message = "") {
+      const box = qs(`#${id}`);
+      box.textContent = message;
+      box.classList.toggle("active", Boolean(message));
+    }
+
+    function friendlyError(error) {
+      const message = error && error.message ? error.message : String(error);
+      if (message.toLowerCase().includes("failed to fetch")) {
+        return "We could not reach the NaijaSense API. This may be a network or CORS issue. Please confirm the backend is live and try again.";
+      }
+      return message || "Something went wrong. Please try again.";
+    }
+
+    async function readJson(response) {
+      let payload = null;
+      try {
+        payload = await response.json();
+      } catch (error) {
+        payload = null;
+      }
+
+      if (!response.ok) {
+        const apiMessage = payload?.detail || payload?.message || payload?.error || `API returned ${response.status}`;
+        throw new Error(apiMessage);
+      }
+
+      return payload || {};
+    }
+
+    function firstDefined(...values) {
+      return values.find(value => value !== undefined && value !== null && value !== "");
+    }
+
+    function normalizeRating(value) {
+      const numeric = Number(value);
+      if (Number.isFinite(numeric)) {
+        return Math.max(1, Math.min(5, Math.round(numeric)));
+      }
+      return 5;
+    }
+
+    function renderStars(rating) {
+      const safeRating = normalizeRating(rating);
+      return "★★★★★".slice(0, safeRating) + "☆☆☆☆☆".slice(0, 5 - safeRating);
+    }
+
+    function normalizeScore(value, index) {
+      const numeric = Number(value);
+      if (Number.isFinite(numeric)) {
+        if (numeric <= 1) return Math.max(0, Math.min(100, Math.round(numeric * 100)));
+        return Math.max(0, Math.min(100, Math.round(numeric)));
+      }
+      return Math.max(50, 92 - index * 7);
+    }
+
+    function inferDomain(item) {
+      const raw = String(firstDefined(item.domain, item.source, item.dataset, item.type, item.category, "")).toLowerCase();
+      if (raw.includes("amazon") || raw.includes("product")) return "amazon";
+      if (raw.includes("yelp") || raw.includes("business") || raw.includes("restaurant")) return "yelp";
+      return "yelp";
+    }
+
+    function normalizeRecommendation(item, index) {
+      const domain = inferDomain(item);
+      return {
+        name: firstDefined(item.name, item.business_name, item.product_name, item.title, item.item_name, `Recommendation ${index + 1}`),
+        reason: firstDefined(item.reason, item.explanation, item.recommendation_reason, item.review, item.description, "Strong match for your taste profile and current query."),
+        score: normalizeScore(firstDefined(item.similarity_score, item.score, item.similarity, item.confidence, item.relevance), index),
+        domain
+      };
+    }
+
+    function extractRecommendations(payload) {
+      const candidates = [
+        payload.recommendations,
+        payload.results,
+        payload.items,
+        payload.data,
+        Array.isArray(payload) ? payload : null
+      ];
+      const list = candidates.find(Array.isArray) || [];
+      return list.map(normalizeRecommendation);
+    }
+
+    function renderRecommendations(containerId, recommendations, useDomainFilter = true) {
+      const container = qs(`#${containerId}`);
+      const filtered = useDomainFilter
+        ? recommendations.filter(item => state.domain === "all" || item.domain === state.domain)
+        : recommendations;
+
+      if (!filtered.length) {
+        container.innerHTML = '<div class="empty-state">No matching recommendations to show yet. Try a broader query or switch the domain filter to All.</div>';
+        return;
+      }
+
+      container.innerHTML = filtered.map(item => `
+        <article class="rec-card">
+          <div class="rec-header">
+            <h3 class="rec-title">${escapeHtml(item.name)}</h3>
+            <span class="badge ${item.domain}">${item.domain === "amazon" ? "Amazon" : "Yelp"}</span>
+          </div>
+          <p class="rec-reason">"${escapeHtml(item.reason)}"</p>
+          <div class="score-row" aria-label="Similarity score ${item.score}%">
+            <div class="progress"><div class="progress-bar" style="width: ${item.score}%"></div></div>
+            <span class="score-label">${item.score}%</span>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    async function checkHealth() {
+      const dot = qs("#apiDot");
+      const text = qs("#apiStatusText");
+      try {
+        const response = await fetch(`${API_BASE}/health`);
+        await readJson(response);
+        dot.className = "dot live";
+        text.textContent = "API live";
+      } catch (error) {
+        dot.className = "dot down";
+        text.textContent = "API unreachable";
+      }
+    }
+
+    async function handleReviewSubmit(event) {
+      event.preventDefault();
+      const userId = qs("#reviewUserId").value.trim();
+      const itemId = qs("#reviewBusinessId").value.trim();
+      const languageMode = state.modes.review;
+
+      setError("reviewError");
+      qs("#reviewResult").classList.remove("active");
+      setLoading("reviewLoading", true);
+      qs("#reviewSubmit").disabled = true;
+
+      try {
+        const response = await fetch(`${API_BASE}/task-a/generate-review`, {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            user_id: userId,
+            item_id: itemId,
+            persona: {},
+            language_mode: languageMode
+          })
+        });
+        const payload = await readJson(response);
+        const rating = firstDefined(payload.rating, payload.stars, payload.predicted_rating, payload.data?.rating, 5);
+        const review = firstDefined(payload.review, payload.review_text, payload.generated_review, payload.text, payload.data?.review, "This spot comes highly recommended. The experience feels personal, flavorful, and worth checking out.");
+
+        qs("#reviewStars").textContent = renderStars(rating);
+        qs("#reviewStars").setAttribute("aria-label", `${normalizeRating(rating)} star rating`);
+        qs("#reviewText").textContent = review;
+        qs("#reviewModeBadge").textContent = languageMode.charAt(0).toUpperCase() + languageMode.slice(1);
+        qs("#reviewResult").classList.add("active");
+      } catch (error) {
+        setError("reviewError", friendlyError(error));
+      } finally {
+        setLoading("reviewLoading", false);
+        qs("#reviewSubmit").disabled = false;
+      }
+    }
+
+    async function handleRecommendSubmit(event) {
+      event.preventDefault();
+      const userId = qs("#recUserId").value.trim();
+      const query = qs("#recQuery").value.trim();
+      const topK = Number(qs("#topK").value);
+      const languageMode = state.modes.recommend;
+
+      setError("recError");
+      qs("#recResults").innerHTML = "";
+      qs("#recSummary").classList.remove("active");
+      setLoading("recLoading", true);
+      qs("#recSubmit").disabled = true;
+
+      try {
+        const response = await fetch(`${API_BASE}/task-b/recommend`, {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            user_id: userId,
+            query: query,
+            top_k: topK,
+            is_cold_start: false,
+            language_mode: languageMode
+          })
+        });
+        const payload = await readJson(response);
+        const recommendations = extractRecommendations(payload);
+        state.recommendations = recommendations;
+        renderRecommendations("recResults", recommendations);
+
+        const summary = firstDefined(
+          payload.reasoning_summary,
+          payload.summary,
+          payload.reasoning,
+          payload.explanation,
+          `NaijaSense matched "${query}" against your profile, ranked the strongest ${topK} options, and highlighted why each one fits.`
+        );
+        qs("#recSummary").textContent = summary;
+        qs("#recSummary").classList.add("active");
+      } catch (error) {
+        setError("recError", friendlyError(error));
+      } finally {
+        setLoading("recLoading", false);
+        qs("#recSubmit").disabled = false;
+      }
+    }
+
+    function normalizeQuestion(raw, index) {
+      const id = firstDefined(raw.id, raw.key, raw.name, `question_${index + 1}`);
+      const question = firstDefined(raw.question, raw.text, raw.label, `Question ${index + 1}`);
+      const options = firstDefined(raw.options, raw.choices, raw.answers, []);
+      const type = raw.type || (Array.isArray(options) && options.length ? "radio" : "text");
+      return { id, question, options: Array.isArray(options) ? options : [], type, placeholder: raw.placeholder || "Type your answer" };
+    }
+
+    function renderQuestions(questions) {
+      const list = qs("#questionList");
+      const normalized = questions.map(normalizeQuestion).slice(0, 5);
+      state.onboardingQuestions = normalized.length ? normalized : fallbackQuestions;
+
+      list.innerHTML = state.onboardingQuestions.map((item, index) => {
+        if (item.type === "text" || !item.options.length) {
+          return `
+            <div class="question-card">
+              <p>${index + 1}. ${escapeHtml(item.question)}</p>
+              <input type="text" name="${escapeHtml(item.id)}" placeholder="${escapeHtml(item.placeholder || "Type your answer")}" required>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="question-card">
+            <p>${index + 1}. ${escapeHtml(item.question)}</p>
+            <div class="option-list">
+              ${item.options.map((option, optionIndex) => `
+                <label class="option-item">
+                  <input type="radio" name="${escapeHtml(item.id)}" value="${escapeHtml(option)}" ${optionIndex === 0 ? "required" : ""}>
+                  <span>${escapeHtml(option)}</span>
+                </label>
+              `).join("")}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      qs("#coldSubmit").disabled = false;
+    }
+
+    async function loadOnboardingQuestions() {
+      setError("questionsError");
+      setLoading("questionsLoading", true);
+      qs("#loadQuestions").disabled = true;
+
+      try {
+        const response = await fetch(`${API_BASE}/task-b/onboarding-questions`);
+        const payload = await readJson(response);
+        const questions = firstDefined(payload.questions, payload.onboarding_questions, payload.data, Array.isArray(payload) ? payload : null);
+        renderQuestions(Array.isArray(questions) ? questions : fallbackQuestions);
+      } catch (error) {
+        renderQuestions(fallbackQuestions);
+        setError("questionsError", `${friendlyError(error)} Showing a local fallback so you can still test the flow.`);
+      } finally {
+        setLoading("questionsLoading", false);
+        qs("#loadQuestions").disabled = false;
+      }
+    }
+
+    function collectColdAnswers() {
+      const answers = {};
+      const formData = new FormData(qs("#coldForm"));
+      state.onboardingQuestions.forEach(item => {
+        answers[item.id] = String(formData.get(item.id) || "").trim();
+      });
+      return answers;
+    }
+
+    function buildPersonaText(answers, payload) {
+      const serverPersona = firstDefined(payload.persona, payload.starter_persona, payload.profile, payload.inferred_persona);
+      if (serverPersona) {
+        return typeof serverPersona === "string" ? serverPersona : JSON.stringify(serverPersona, null, 2);
+      }
+
+      const values = Object.values(answers).filter(Boolean);
+      if (!values.length) {
+        return "NaijaSense inferred a flexible explorer profile with broad taste and room for discovery.";
+      }
+
+      return `NaijaSense sees a user who values ${values.slice(0, 3).join(", ")}. The starter profile leans toward practical, high-fit recommendations with Nigerian context baked into the reasoning.`;
+    }
+
+    async function handleColdSubmit(event) {
+      event.preventDefault();
+      const answers = collectColdAnswers();
+
+      setError("coldError");
+      qs("#coldResults").innerHTML = "";
+      setLoading("coldLoading", true);
+      qs("#coldSubmit").disabled = true;
+
+      try {
+        const response = await fetch(`${API_BASE}/task-b/cold-start-recommend`, {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            user_id: "new_user_" + Date.now(),
+            answers: answers
+          })
+        });
+        const payload = await readJson(response);
+        const recommendations = extractRecommendations(payload);
+        state.coldRecommendations = recommendations;
+        renderRecommendations("coldResults", recommendations, false);
+        qs("#personaBox").textContent = buildPersonaText(answers, payload);
+        qs("#personaBox").classList.add("active");
+      } catch (error) {
+        setError("coldError", friendlyError(error));
+      } finally {
+        setLoading("coldLoading", false);
+        qs("#coldSubmit").disabled = false;
+      }
+    }
+
+    function bindEvents() {
+      qsa(".tab-btn").forEach(button => {
+        button.addEventListener("click", () => setActiveTab(button.dataset.tab));
+      });
+
+      qsa(".mode-selector").forEach(group => {
+        const groupName = group.dataset.modeGroup;
+        qsa(".mode-btn", group).forEach(button => {
+          button.addEventListener("click", () => setMode(groupName, button.dataset.mode));
+        });
+      });
+
+      qsa(".domain-btn").forEach(button => {
+        button.addEventListener("click", () => {
+          state.domain = button.dataset.domain;
+          qsa(".domain-btn").forEach(item => item.classList.toggle("active", item === button));
+          if (state.recommendations.length) {
+            renderRecommendations("recResults", state.recommendations);
+          }
+        });
+      });
+
+      qs("#topK").addEventListener("input", event => {
+        qs("#topKValue").textContent = event.target.value;
+      });
+
+      qs("#reviewForm").addEventListener("submit", handleReviewSubmit);
+      qs("#recommendForm").addEventListener("submit", handleRecommendSubmit);
+      qs("#loadQuestions").addEventListener("click", loadOnboardingQuestions);
+      qs("#coldForm").addEventListener("submit", handleColdSubmit);
+
+      qs("#copyReview").addEventListener("click", async () => {
+        const text = qs("#reviewText").textContent;
+        try {
+          await navigator.clipboard.writeText(text);
+          qs("#copyReview").textContent = "Copied";
+          setTimeout(() => qs("#copyReview").textContent = "Copy Review", 1200);
+        } catch (error) {
+          qs("#copyReview").textContent = "Select text to copy";
+          setTimeout(() => qs("#copyReview").textContent = "Copy Review", 1600);
+        }
+      });
+    }
+
+    bindEvents();
+    checkHealth();
+  </script>
+</body>
+</html>
